@@ -1,0 +1,31 @@
+# Hệ thống
+.DS_Store
+Thumbs.db
+
+# PHP cache
+*.log
+*.cache
+*.tmp
+
+# Composer
+/vendor/
+
+# Biến môi trường
+.env
+
+# IDE/editor files
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# Node modules nếu có frontend
+/node_modules/
+
+# Tệp dữ liệu tạm
+/storage/*.txt
+/storage/*.log
+/storage/*.json
+
+# Backup/migration tạm
+/database/*.sql

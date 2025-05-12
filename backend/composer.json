@@ -1,0 +1,17 @@
+{
+    "name": "metacom/starclasses",
+    "autoload": {
+        "psr-4": {
+            "Metacom\\Starclasses\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "thang-dev-aptech",
+            "email": "ngdthang.dev@gmail.com"
+        }
+    ],
+    "require": {
+        "vlucas/phpdotenv": "^5.6"
+    }
+}
