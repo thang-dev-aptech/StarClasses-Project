@@ -1,0 +1,44 @@
+body{
+  display: flex;
+}
+.sidebar {
+  width: 350px;
+  background-color: #1E3A8A;
+  padding: 20px 0;
+  font-family: 'Segoe UI', sans-serif;
+  min-height: 100vh;
+}
+
+.sidebar h4 {
+  color: #fff;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.sidebar .nav-link {
+  color: #fff;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  font-weight: 500;
+  transition: 0.3s;
+  border-left: 4px solid transparent;
+  border-radius: 0 20px 20px 0;
+}
+
+.sidebar .nav-link:hover {
+  background-color: #2C4CC4;
+  border-left: 4px solid #fff;
+}
+
+.sidebar .nav-link.active {
+  background-color: #3B82F6;
+  border-left: 4px solid #fff;
+  color: #fff;
+}
+
+/*======================== main content ================== */
+.main-content {
+  width: 100%;
+}
+
