@@ -1,0 +1,59 @@
+body {
+    background: linear-gradient(to bottom right, #f8fbff, #edf4ff);
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Poppins', sans-serif;
+}
+
+.logo {
+    height: 48px;
+}
+
+.brand {
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.brand h4 {
+    font-weight: 700;
+    color: #1d3b84;
+    margin: 0.5rem 0 0.25rem;
+}
+
+.brand small {
+    color: #666;
+}
+
+.login-box {
+    background: #fff;
+    border-radius: 20px;
+    padding: 2rem;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.05);
+    margin-bottom: 1rem;
+}
+
+.login-box h5 {
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+}
+
+.form-control {
+    border-radius: 10px;
+}
+
+.btn-login {
+    border-radius: 10px;
+    background: #000;
+    color: #fff;
+}
+
+.footer {
+    text-align: center;
+    font-size: 0.875rem;
+    color: #999;
+}
