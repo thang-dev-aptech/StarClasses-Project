@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS users (
 -- Bảng khoá học
 CREATE TABLE IF NOT EXISTS courses (
   id INT AUTO_INCREMENT PRIMARY KEY,
-  title VARCHAR(100) NOT NULL,
+  courses_name VARCHAR(100) NOT NULL,
   description TEXT,
   image_path VARCHAR(255),
   category VARCHAR(50),
@@ -28,9 +28,10 @@ CREATE TABLE IF NOT EXISTS courses (
 -- Bảng giáo viên
 CREATE TABLE IF NOT EXISTS teachers (
   id INT AUTO_INCREMENT PRIMARY KEY,
-  name VARCHAR(100) NOT NULL,
+  fullname VARCHAR(100) NOT NULL,
   subject VARCHAR(100),
-  bio TEXT,
+  education TEXT,
+  experience TEXT,
   avatar_path VARCHAR(255),
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
@@ -44,21 +45,26 @@ CREATE TABLE IF NOT EXISTS course_teacher (
   FOREIGN KEY (teacher_id) REFERENCES teachers(id) ON DELETE CASCADE
 );
 
--- Bảng thành tích
-CREATE TABLE IF NOT EXISTS achievements (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  title VARCHAR(100),
-  description TEXT,
-  image_path VARCHAR(255),
-  course_id INT,
-  FOREIGN KEY (course_id) REFERENCES courses(id) ON DELETE SET NULL
-);
+
 
 -- Bảng yêu cầu tư vấn từ người dùng
 CREATE TABLE IF NOT EXISTS consult_requests (
   id INT AUTO_INCREMENT PRIMARY KEY,
-  full_name VARCHAR(100),
+  firstname VARCHAR(100),
+  lastname VARCHAR(100),
+  email VARCHAR(100),
   phone VARCHAR(20),
+  subject VARCHAR(100),
+  message TEXT,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS contact(
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  firstname VARCHAR(100),
+  lastname VARCHAR(100),
+  email VARCHAR(100),
+  phone VARCH AR(20),
   message TEXT,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

@@ -16,7 +16,9 @@
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
                     <li><a class="dropdown-item" href="#">Profile</a></li>
                     <li><a class="dropdown-item" href="#">Settings</a></li>
-                    <li><hr class="dropdown-divider"></li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
                     <li><a class="dropdown-item text-danger" href="#">Logout</a></li>
                 </ul>
             </div>
@@ -26,109 +28,60 @@
     <!-- main content -->
     <div class="container-fluid p-4">
         <!-- action buttons -->
+         <div class="container-fluid">
+                <div class="d-flex flex-column">
+                    <h1 class="h3 mb-0 text-gray-800">Courses</h1>
+                    <p class="text-muted">Manage your tutoring courses</p>
+                </div>
+            </div>
         <div class="d-flex justify-content-between align-items-center mb-4">
-            <div class="d-flex gap-2">
-                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addCourseModal">
-                    <i class="bi bi-plus-lg me-2"></i>Add New Course
-                </button>
-                <button class="btn btn-outline-secondary">
-                    <i class="bi bi-download me-2"></i>Export
-                </button>
-            </div>
-            <div class="d-flex gap-2">
-                <div class="input-group">
-                    <span class="input-group-text bg-white border-end-0">
-                        <i class="bi bi-search"></i>
-                    </span>
-                    <input type="text" class="form-control border-start-0" placeholder="Search courses...">
+            
+                <div class="d-flex gap-2">
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addCourseModal">
+                        <i class="bi bi-plus-lg me-2"></i>Add New Course
+                    </button>
+                    <button class="btn btn-outline-secondary">
+                        <i class="bi bi-download me-2"></i>Export
+                    </button>
                 </div>
-                <select class="form-select" style="width: auto;">
-                    <option value="">All Categories</option>
-                    <option value="programming">Programming</option>
-                    <option value="design">Design</option>
-                    <option value="business">Business</option>
-                </select>
-            </div>
-        </div>
-
-        <!-- courses table -->
-        <div class="card">
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th>
-                                    <input type="checkbox" class="form-check-input">
-                                </th>
-                                <th>Course Name</th>
-                                <th>Category</th>
-                                <th>Instructor</th>
-                                <th>Students</th>
-                                <th>Price</th>
-                                <th>Status</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- Sample data - will be replaced with dynamic data later -->
-                            <tr>
-                                <td><input type="checkbox" class="form-check-input"></td>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <img src="https://via.placeholder.com/40" class="rounded me-2" alt="Course">
-                                        <div>
-                                            <h6 class="mb-0">Web Development Bootcamp</h6>
-                                            <small class="text-muted">Last updated: 2 days ago</small>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>Programming</td>
-                                <td>John Doe</td>
-                                <td>1,234</td>
-                                <td>$99.99</td>
-                                <td><span class="badge bg-success">Active</span></td>
-                                <td>
-                                    <div class="btn-group">
-                                        <button class="btn btn-sm btn-light" title="Edit">
-                                            <i class="bi bi-pencil"></i>
-                                        </button>
-                                        <button class="btn btn-sm btn-light" title="View">
-                                            <i class="bi bi-eye"></i>
-                                        </button>
-                                        <button class="btn btn-sm btn-light text-danger" title="Delete">
-                                            <i class="bi bi-trash"></i>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <!-- Add more sample rows here -->
-                        </tbody>
-                    </table>
-                </div>
-
-                <!-- pagination -->
-                <div class="d-flex justify-content-between align-items-center mt-4">
-                    <div class="text-muted">
-                        Showing 1 to 10 of 100 entries
+                <div class="d-flex gap-2">
+                    <div class="input-group">
+                        <span class="input-group-text bg-white border-end-0">
+                            <i class="bi bi-search"></i>
+                        </span>
+                        <input type="text" class="form-control border-start-0" placeholder="Search courses...">
                     </div>
-                    <nav>
-                        <ul class="pagination mb-0">
-                            <li class="page-item disabled">
-                                <a class="page-link" href="#" tabindex="-1">Previous</a>
-                            </li>
-                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item">
-                                <a class="page-link" href="#">Next</a>
-                            </li>
-                        </ul>
-                    </nav>
+                    <select class="form-select" style="width: auto;">
+                        <option value="">All Categories</option>
+                        <option value="programming">Programming</option>
+                        <option value="design">Design</option>
+                        <option value="business">Business</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- courses table -->
+            <div class="card">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Course Name</th>
+                                    <th>Category</th>
+                                    <th>Instructor</th>
+                                    <th>Price</th>
+                                    <th>Created At</th>
+                                    <th>Image</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 </main>
 
 <!-- Add Course Modal -->

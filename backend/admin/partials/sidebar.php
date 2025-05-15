@@ -12,18 +12,13 @@
       </a>
     </li>
     <li class="nav-item">
-      <a href="#" class="nav-link">
+      <a href="teachers.php" class="nav-link">
         <i class="bi bi-people me-2"></i> Teachers
       </a>
     </li>
     <li class="nav-item">
-      <a href="#" class="nav-link">
+      <a href="consult.php" class="nav-link">
         <i class="bi bi-chat-dots me-2"></i> Consult Requests
-      </a>
-    </li>
-    <li class="nav-item">
-      <a href="#" class="nav-link">
-        <i class="bi bi-envelope me-2"></i> Contact Messages
       </a>
     </li>
   </ul>
