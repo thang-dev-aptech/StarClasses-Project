@@ -30,8 +30,7 @@ CREATE TABLE IF NOT EXISTS courses (
 CREATE TABLE IF NOT EXISTS teachers (
   id INT PRIMARY KEY AUTO_INCREMENT,                 -- Mã giáo viên
   teacher_name VARCHAR(100) NOT NULL,                        -- Họ tên
-  category VARCHAR(100),     
-  subject VARCHAR(100) ,                 -- Dạy môn gì / chuyên môn
+  specialization VARCHAR(100),                       -- Dạy môn gì / chuyên môn
   experience TEXT,                                   -- Kinh nghiệm làm việc
   bio TEXT,                                  -- Trình độ học vấn
   image VARCHAR(255),                                -- Ảnh đại diện
@@ -61,4 +60,4 @@ CREATE TABLE IF NOT EXISTS course_teacher (
   PRIMARY KEY (course_id, teacher_id),
   FOREIGN KEY (course_id) REFERENCES courses(id) ON DELETE CASCADE,
   FOREIGN KEY (teacher_id) REFERENCES teachers(id) ON DELETE CASCADE
-);
+); 

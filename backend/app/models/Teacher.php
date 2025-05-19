@@ -24,57 +24,44 @@ class Teacher {
     }
 
     public function create($data) {
-        $sql = "INSERT INTO teachers (name, email, phone, bio, specialization, experience_years, education, is_active, avatar) 
-                VALUES (:name, :email, :phone, :bio, :specialization, :experience_years, :education, :is_active, :avatar)";
-        
+        $sql = "INSERT INTO teachers (teacher_name, category, subject, experience, bio, image, is_active) 
+                VALUES (:teacher_name, :category, :subject, :experience, :bio, :image, :is_active)";
         $stmt = $this->db->prepare($sql);
         return $stmt->execute([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'phone' => $data['phone'],
+            'teacher_name' => $data['teacher_name'],
+            'category' => $data['category'],
+            'subject' => $data['subject'],
+            'experience' => $data['experience'],
             'bio' => $data['bio'],
-            'specialization' => $data['specialization'],
-            'experience_years' => $data['experience_years'],
-            'education' => $data['education'],
-            'is_active' => $data['is_active'],
-            'avatar' => $data['avatar']
+            'image' => $data['image'],
+            'is_active' => $data['is_active']
         ]);
     }
 
     public function update($id, $data) {
         $sql = "UPDATE teachers SET 
-                name = :name,
-                email = :email,
-                phone = :phone,
+                teacher_name = :teacher_name,
+                category = :category,
+                subject = :subject,
+                experience = :experience,
                 bio = :bio,
-                specialization = :specialization,
-                experience_years = :experience_years,
-                education = :education,
                 is_active = :is_active";
-        
-        // Only update avatar if a new one is provided
-        if ($data['avatar'] !== null) {
-            $sql .= ", avatar = :avatar";
+        if ($data['image'] !== null) {
+            $sql .= ", image = :image";
         }
-        
         $sql .= " WHERE id = :id";
-        
         $params = [
             'id' => $id,
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'phone' => $data['phone'],
+            'teacher_name' => $data['teacher_name'],
+            'category' => $data['category'],
+            'subject' => $data['subject'],
+            'experience' => $data['experience'],
             'bio' => $data['bio'],
-            'specialization' => $data['specialization'],
-            'experience_years' => $data['experience_years'],
-            'education' => $data['education'],
             'is_active' => $data['is_active']
         ];
-        
-        if ($data['avatar'] !== null) {
-            $params['avatar'] = $data['avatar'];
+        if ($data['image'] !== null) {
+            $params['image'] = $data['image'];
         }
-        
         $stmt = $this->db->prepare($sql);
         return $stmt->execute($params);
     }

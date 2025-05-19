@@ -157,11 +157,18 @@ if ($filterCategory !== '' && $filterCategory !== 'all') {
                                     <?php endif; ?>
                                 </td>
                                 <td>
-                                    <?php if (!empty($course['image'])): ?>
-                                        <img src="<?= htmlspecialchars($course['image']) ?>" alt="<?= htmlspecialchars($course['course_name']) ?>" style="width:40px;height:40px;object-fit:cover;">
-                                    <?php else: ?>
-                                        Không có ảnh
-                                    <?php endif; ?>
+                                    <?php
+                                    $image = $course['image'] ?? '';
+                                    $isImage = preg_match('/\.(jpg|jpeg|png|gif)$/i', $image);
+                                    $imagePath = __DIR__ . '/../storage/' . $image;
+                                    if ($isImage && file_exists($imagePath)) {
+                                        // Đường dẫn ảnh hợp lệ
+                                        echo '<img src="/storage/' . htmlspecialchars($image) . '" alt="' . htmlspecialchars($course['course_name']) . '" style="width:40px;height:40px;object-fit:cover;">';
+                                    } else {
+                                        // Ảnh mặc định
+                                        echo '<img src="/assets/no-image.png" alt="Không có ảnh" style="width:40px;height:40px;object-fit:cover;">';
+                                    }
+                                    ?>
                                 </td>
                                 <td>
                                     <div class="btn-group btn-group-sm">
@@ -227,7 +234,11 @@ if ($filterCategory !== '' && $filterCategory !== 'all') {
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Danh mục (Category) <span class="text-danger">*</span></label>
-                                <input type="text" name="category" class="form-control" required value="<?= $editCourse ? htmlspecialchars($editCourse['category']) : '' ?>">
+                                <select name="category" class="form-select" required>
+                                    <option value="programming" <?= ($editCourse && $editCourse['category'] === 'programming') ? 'selected' : '' ?>>Programming</option>
+                                    <option value="business" <?= ($editCourse && $editCourse['category'] === 'business') ? 'selected' : '' ?>>Business</option>
+                                    <option value="design" <?= ($editCourse && $editCourse['category'] === 'design') ? 'selected' : '' ?>>Design</option>
+                                </select>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Điểm đánh giá (Rating)</label>

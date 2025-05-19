@@ -36,9 +36,10 @@ class TeacherController extends BaseController {
 
     public function store() {
         $errors = $this->validateRequest([
-            'name' => 'required|min:3',
-            'email' => 'required|email',
-            'specialization' => 'required'
+            'teacher_name' => 'required|min:3',
+            'category' => 'required',
+            'subject' => 'required',
+            'experience' => 'required',
         ]);
 
         if (!empty($errors)) {
@@ -46,22 +47,20 @@ class TeacherController extends BaseController {
         }
 
         try {
-            // Handle avatar upload if provided
-            $avatarPath = null;
-            if (isset($_FILES['avatar']) && $_FILES['avatar']['error'] === UPLOAD_ERR_OK) {
-                $avatarPath = $this->handleAvatarUpload($_FILES['avatar']);
+            // Handle image upload if provided
+            $imagePath = null;
+            if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
+                $imagePath = $this->handleImageUpload($_FILES['image']);
             }
 
             $teacherData = [
-                'name' => $_POST['name'],
-                'email' => $_POST['email'],
-                'phone' => $_POST['phone'] ?? null,
+                'teacher_name' => $_POST['teacher_name'],
+                'category' => $_POST['category'],
+                'subject' => $_POST['subject'],
+                'experience' => $_POST['experience'],
                 'bio' => $_POST['bio'] ?? null,
-                'specialization' => $_POST['specialization'],
-                'experience_years' => $_POST['experience_years'] ?? 0,
-                'education' => $_POST['education'] ?? null,
-                'is_active' => isset($_POST['is_active']) ? 1 : 0,
-                'avatar' => $avatarPath
+                'image' => $imagePath,
+                'is_active' => isset($_POST['is_active']) ? 1 : 0
             ];
 
             $teacher = $this->teacherModel->create($teacherData);
@@ -73,9 +72,10 @@ class TeacherController extends BaseController {
 
     public function update($id) {
         $errors = $this->validateRequest([
-            'name' => 'required|min:3',
-            'email' => 'required|email',
-            'specialization' => 'required'
+            'teacher_name' => 'required|min:3',
+            'category' => 'required',
+            'subject' => 'required',
+            'experience' => 'required',
         ]);
 
         if (!empty($errors)) {
@@ -84,20 +84,18 @@ class TeacherController extends BaseController {
 
         try {
             $teacherData = [
-                'name' => $_POST['name'],
-                'email' => $_POST['email'],
-                'phone' => $_POST['phone'] ?? null,
+                'teacher_name' => $_POST['teacher_name'],
+                'category' => $_POST['category'],
+                'subject' => $_POST['subject'],
+                'experience' => $_POST['experience'],
                 'bio' => $_POST['bio'] ?? null,
-                'specialization' => $_POST['specialization'],
-                'experience_years' => $_POST['experience_years'] ?? 0,
-                'education' => $_POST['education'] ?? null,
-                'is_active' => isset($_POST['is_active']) ? 1 : 0,
-                'avatar' => null
+                'image' => null,
+                'is_active' => isset($_POST['is_active']) ? 1 : 0
             ];
 
-            // Handle avatar upload if provided
-            if (isset($_FILES['avatar']) && $_FILES['avatar']['error'] === UPLOAD_ERR_OK) {
-                $teacherData['avatar'] = $this->handleAvatarUpload($_FILES['avatar']);
+            // Handle image upload if provided
+            if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
+                $teacherData['image'] = $this->handleImageUpload($_FILES['image']);
             }
 
             $this->teacherModel->update($id, $teacherData);
@@ -116,7 +114,7 @@ class TeacherController extends BaseController {
         }
     }
 
-    private function handleAvatarUpload($file) {
+    private function handleImageUpload($file) {
         $uploadDir = __DIR__ . '/../../storage/uploads/teachers/';
         if (!is_dir($uploadDir)) {
             mkdir($uploadDir, 0755, true);

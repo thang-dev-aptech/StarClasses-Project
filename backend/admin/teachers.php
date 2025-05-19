@@ -23,25 +23,23 @@ if (isset($_GET['edit_id'])) {
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $data = [
-        'name' => $_POST['name'],
-        'email' => $_POST['email'],
-        'phone' => $_POST['phone'],
+        'teacher_name' => $_POST['teacher_name'],
+        'category' => $_POST['category'],
+        'subject' => $_POST['subject'],
+        'experience' => $_POST['experience'],
         'bio' => $_POST['bio'],
-        'specialization' => $_POST['specialization'],
-        'experience_years' => $_POST['experience_years'],
-        'education' => $_POST['education'],
         'is_active' => isset($_POST['is_active']) ? 1 : 0,
-        'avatar' => null
+        'image' => null
     ];
     // Xử lý upload ảnh nếu có
-    if (isset($_FILES['avatar']) && $_FILES['avatar']['error'] === UPLOAD_ERR_OK) {
+    if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
         $uploadDir = __DIR__ . '/../storage/uploads/teachers/';
         if (!is_dir($uploadDir)) mkdir($uploadDir, 0755, true);
-        $ext = pathinfo($_FILES['avatar']['name'], PATHINFO_EXTENSION);
+        $ext = pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION);
         $filename = uniqid() . '.' . $ext;
         $filepath = $uploadDir . $filename;
-        if (move_uploaded_file($_FILES['avatar']['tmp_name'], $filepath)) {
-            $data['avatar'] = 'uploads/teachers/' . $filename;
+        if (move_uploaded_file($_FILES['image']['tmp_name'], $filepath)) {
+            $data['image'] = 'uploads/teachers/' . $filename;
         }
     }
     if (isset($_POST['edit_id']) && $_POST['edit_id']) {
@@ -57,19 +55,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 // Xử lý tìm kiếm và lọc
 $search = isset($_GET['search']) ? trim($_GET['search']) : '';
-$filterSpecialization = isset($_GET['specialization']) ? trim($_GET['specialization']) : '';
+$filterCategory = isset($_GET['category']) ? trim($_GET['category']) : '';
+$filterSubject = isset($_GET['subject']) ? trim($_GET['subject']) : '';
 
 // Lấy danh sách giáo viên và lọc
 $teachers = $teacherModel->getAll();
 if ($search !== '') {
     $teachers = array_filter($teachers, function($t) use ($search) {
-        return stripos($t['name'], $search) !== false || 
-               stripos($t['email'], $search) !== false;
+        return stripos($t['teacher_name'], $search) !== false;
     });
 }
-if ($filterSpecialization !== '' && $filterSpecialization !== 'all') {
-    $teachers = array_filter($teachers, function($t) use ($filterSpecialization) {
-        return strtolower($t['specialization']) === strtolower($filterSpecialization);
+if ($filterCategory !== '' && $filterCategory !== 'all') {
+    $teachers = array_filter($teachers, function($t) use ($filterCategory) {
+        return strtolower($t['category']) === strtolower($filterCategory);
+    });
+}
+if ($filterSubject !== '' && $filterSubject !== 'all') {
+    $teachers = array_filter($teachers, function($t) use ($filterSubject) {
+        return strtolower($t['subject']) === strtolower($filterSubject);
     });
 }
 ?>
@@ -108,11 +111,17 @@ if ($filterSpecialization !== '' && $filterSpecialization !== 'all') {
             <div class="d-flex gap-2">
                 <form method="get" class="d-flex gap-2 mb-4" style="max-width: 600px;">
                     <input type="text" name="search" class="form-control" placeholder="Tìm kiếm giáo viên..." value="<?= htmlspecialchars($search) ?>">
-                    <select name="specialization" class="form-select" style="width: 180px;">
-                        <option value="all">Tất cả chuyên môn</option>
-                        <option value="programming" <?= $filterSpecialization==='programming'?'selected':'' ?>>Lập trình</option>
-                        <option value="design" <?= $filterSpecialization==='design'?'selected':'' ?>>Thiết kế</option>
-                        <option value="business" <?= $filterSpecialization==='business'?'selected':'' ?>>Kinh doanh</option>
+                    <select name="category" class="form-select" style="width: 180px;">
+                        <option value="all">Tất cả danh mục</option>
+                        <option value="programming" <?= $filterCategory==='programming'?'selected':'' ?>>Lập trình</option>
+                        <option value="design" <?= $filterCategory==='design'?'selected':'' ?>>Thiết kế</option>
+                        <option value="business" <?= $filterCategory==='business'?'selected':'' ?>>Kinh doanh</option>
+                    </select>
+                    <select name="subject" class="form-select" style="width: 180px;">
+                        <option value="all">Tất cả môn học</option>
+                        <option value="programming" <?= $filterSubject==='programming'?'selected':'' ?>>Lập trình</option>
+                        <option value="design" <?= $filterSubject==='design'?'selected':'' ?>>Thiết kế</option>
+                        <option value="business" <?= $filterSubject==='business'?'selected':'' ?>>Kinh doanh</option>
                     </select>
                     <button class="btn btn-outline-primary" type="submit">Lọc</button>
                 </form>
@@ -128,9 +137,8 @@ if ($filterSpecialization !== '' && $filterSpecialization !== 'all') {
                             <tr>
                                 <th class="border-0" style="width: 60px;">ID</th>
                                 <th class="border-0">Tên giáo viên</th>
-                                <th class="border-0">Email</th>
-                                <th class="border-0">Số điện thoại</th>
-                                <th class="border-0">Chuyên môn</th>
+                                <th class="border-0">Danh mục</th>
+                                <th class="border-0">Môn học</th>
                                 <th class="border-0">Kinh nghiệm</th>
                                 <th class="border-0">Trạng thái</th>
                                 <th class="border-0">Ảnh đại diện</th>
@@ -139,16 +147,15 @@ if ($filterSpecialization !== '' && $filterSpecialization !== 'all') {
                         </thead>
                         <tbody>
                         <?php if (empty($teachers)): ?>
-                            <tr><td colspan="9" class="text-center">Chưa có giáo viên nào</td></tr>
+                            <tr><td colspan="8" class="text-center">Chưa có giáo viên nào</td></tr>
                         <?php else: ?>
                             <?php foreach ($teachers as $teacher): ?>
                             <tr>
                                 <td><?= htmlspecialchars($teacher['id']) ?></td>
-                                <td><?= htmlspecialchars($teacher['name']) ?></td>
-                                <td><?= htmlspecialchars($teacher['email']) ?></td>
-                                <td><?= htmlspecialchars($teacher['phone']) ?></td>
-                                <td><?= htmlspecialchars($teacher['specialization']) ?></td>
-                                <td><?= htmlspecialchars($teacher['experience_years']) ?> năm</td>
+                                <td><?= htmlspecialchars($teacher['teacher_name']) ?></td>
+                                <td><?= htmlspecialchars($teacher['category']) ?></td>
+                                <td><?= htmlspecialchars($teacher['subject']) ?></td>
+                                <td><?= htmlspecialchars($teacher['experience']) ?></td>
                                 <td>
                                     <?php if ($teacher['is_active']): ?>
                                         <span class="badge bg-success-subtle text-success">
@@ -159,23 +166,26 @@ if ($filterSpecialization !== '' && $filterSpecialization !== 'all') {
                                     <?php endif; ?>
                                 </td>
                                 <td>
-                                    <?php if (!empty($teacher['avatar'])): ?>
-                                        <img src="<?= htmlspecialchars($teacher['avatar']) ?>" alt="<?= htmlspecialchars($teacher['name']) ?>" style="width:40px;height:40px;object-fit:cover;">
-                                    <?php else: ?>
-                                        Không có ảnh
-                                    <?php endif; ?>
+                                    <?php
+                                    $image = $teacher['image'] ?? '';
+                                    $isImage = preg_match('/\.(jpg|jpeg|png|gif)$/i', $image);
+                                    $imagePath = __DIR__ . '/../storage/' . $image;
+                                    if ($isImage && file_exists($imagePath)) {
+                                        echo '<img src="/storage/' . htmlspecialchars($image) . '" alt="' . htmlspecialchars($teacher['teacher_name']) . '" style="width:40px;height:40px;object-fit:cover;">';
+                                    } else {
+                                        echo '<img src="/assets/no-image.png" alt="Không có ảnh" style="width:40px;height:40px;object-fit:cover;">';
+                                    }
+                                    ?>
                                 </td>
                                 <td>
                                     <div class="btn-group btn-group-sm">
                                         <button type="button" class="btn btn-light" title="Sửa"
                                             data-id="<?= $teacher['id'] ?>"
-                                            data-name="<?= htmlspecialchars($teacher['name']) ?>"
-                                            data-email="<?= htmlspecialchars($teacher['email']) ?>"
-                                            data-phone="<?= htmlspecialchars($teacher['phone']) ?>"
+                                            data-teacher_name="<?= htmlspecialchars($teacher['teacher_name']) ?>"
+                                            data-category="<?= htmlspecialchars($teacher['category']) ?>"
+                                            data-subject="<?= htmlspecialchars($teacher['subject']) ?>"
+                                            data-experience="<?= htmlspecialchars($teacher['experience']) ?>"
                                             data-bio="<?= htmlspecialchars($teacher['bio']) ?>"
-                                            data-specialization="<?= htmlspecialchars($teacher['specialization']) ?>"
-                                            data-experience="<?= htmlspecialchars($teacher['experience_years']) ?>"
-                                            data-education="<?= htmlspecialchars($teacher['education']) ?>"
                                             data-is_active="<?= $teacher['is_active'] ?>"
                                             onclick="openEditTeacher(this)">
                                             <i class="bi bi-pencil"></i>
@@ -210,15 +220,23 @@ if ($filterSpecialization !== '' && $filterSpecialization !== 'all') {
                         <div class="col-md-8">
                             <div class="mb-3">
                                 <label class="form-label">Họ tên <span class="text-danger">*</span></label>
-                                <input type="text" name="name" class="form-control" required value="<?= $editTeacher ? htmlspecialchars($editTeacher['name']) : '' ?>">
+                                <input type="text" name="teacher_name" class="form-control" required value="<?= $editTeacher ? htmlspecialchars($editTeacher['teacher_name']) : '' ?>">
                             </div>
                             <div class="mb-3">
-                                <label class="form-label">Email <span class="text-danger">*</span></label>
-                                <input type="email" name="email" class="form-control" required value="<?= $editTeacher ? htmlspecialchars($editTeacher['email']) : '' ?>">
+                                <label class="form-label">Danh mục <span class="text-danger">*</span></label>
+                                <select name="category" class="form-select" required>
+                                    <option value="programming" <?= ($editTeacher && $editTeacher['category'] === 'programming') ? 'selected' : '' ?>>Programming</option>
+                                    <option value="business" <?= ($editTeacher && $editTeacher['category'] === 'business') ? 'selected' : '' ?>>Business</option>
+                                    <option value="design" <?= ($editTeacher && $editTeacher['category'] === 'design') ? 'selected' : '' ?>>Design</option>
+                                </select>
                             </div>
                             <div class="mb-3">
-                                <label class="form-label">Số điện thoại</label>
-                                <input type="tel" name="phone" class="form-control" value="<?= $editTeacher ? htmlspecialchars($editTeacher['phone']) : '' ?>">
+                                <label class="form-label">Môn học <span class="text-danger">*</span></label>
+                                <input type="text" name="subject" class="form-control" required value="<?= $editTeacher ? htmlspecialchars($editTeacher['subject']) : '' ?>">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Kinh nghiệm</label>
+                                <input type="text" name="experience" class="form-control" value="<?= $editTeacher ? htmlspecialchars($editTeacher['experience']) : '' ?>">
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Tiểu sử</label>
@@ -227,25 +245,13 @@ if ($filterSpecialization !== '' && $filterSpecialization !== 'all') {
                         </div>
                         <div class="col-md-4">
                             <div class="mb-3">
-                                <label class="form-label">Chuyên môn <span class="text-danger">*</span></label>
-                                <input type="text" name="specialization" class="form-control" required value="<?= $editTeacher ? htmlspecialchars($editTeacher['specialization']) : '' ?>">
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">Số năm kinh nghiệm</label>
-                                <input type="number" name="experience_years" class="form-control" min="0" value="<?= $editTeacher ? htmlspecialchars($editTeacher['experience_years']) : '0' ?>">
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">Học vấn</label>
-                                <input type="text" name="education" class="form-control" value="<?= $editTeacher ? htmlspecialchars($editTeacher['education']) : '' ?>">
-                            </div>
-                            <div class="mb-3">
                                 <label class="form-label">Ảnh đại diện</label>
-                                <input type="file" name="avatar" class="form-control" accept="image/*">
+                                <input type="file" name="image" class="form-control" accept="image/*">
                                 <div class="form-text">Định dạng: JPG, PNG, GIF. Tối đa 2MB</div>
                             </div>
                             <div class="mb-3">
                                 <div class="form-check form-switch">
-                                    <input class="form-check-input" type="checkbox" name="is_active" id="teacherActive" checked value="<?= $editTeacher ? ($editTeacher['is_active'] ? 'checked' : '') : 'checked' ?>">
+                                    <input class="form-check-input" type="checkbox" name="is_active" id="teacherActive" <?= $editTeacher && !$editTeacher['is_active'] ? '' : 'checked' ?>>
                                     <label class="form-check-label" for="teacherActive">Đang hoạt động</label>
                                 </div>
                             </div>
@@ -266,15 +272,12 @@ if ($filterSpecialization !== '' && $filterSpecialization !== 'all') {
 
 <script>
 function openEditTeacher(btn) {
-    document.querySelector('[name=name]').value = btn.dataset.name;
-    document.querySelector('[name=email]').value = btn.dataset.email;
-    document.querySelector('[name=phone]').value = btn.dataset.phone;
+    document.querySelector('[name=teacher_name]').value = btn.dataset.teacher_name;
+    document.querySelector('[name=category]').value = btn.dataset.category;
+    document.querySelector('[name=subject]').value = btn.dataset.subject;
+    document.querySelector('[name=experience]').value = btn.dataset.experience;
     document.querySelector('[name=bio]').value = btn.dataset.bio;
-    document.querySelector('[name=specialization]').value = btn.dataset.specialization;
-    document.querySelector('[name=experience_years]').value = btn.dataset.experience;
-    document.querySelector('[name=education]').value = btn.dataset.education;
     document.querySelector('[name=is_active]').checked = btn.dataset.is_active == '1';
-    // Add edit_id to hidden input
     let editIdInput = document.querySelector('[name=edit_id]');
     if (!editIdInput) {
         editIdInput = document.createElement('input');
@@ -283,7 +286,6 @@ function openEditTeacher(btn) {
         document.getElementById('addTeacherForm').appendChild(editIdInput);
     }
     editIdInput.value = btn.dataset.id;
-    // Open modal
     var modal = new bootstrap.Modal(document.getElementById('addTeacherModal'));
     modal.show();
 }
