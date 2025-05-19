@@ -1,0 +1,14 @@
+CREATE TABLE IF NOT EXISTS teachers (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    phone VARCHAR(20),
+    bio TEXT,
+    specialization VARCHAR(100) NOT NULL,
+    experience_years INT DEFAULT 0,
+    education VARCHAR(255),
+    is_active TINYINT(1) DEFAULT 1,
+    avatar VARCHAR(255),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci; 
