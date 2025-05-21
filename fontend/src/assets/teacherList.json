@@ -1,0 +1,114 @@
+{
+    "subjects": ["All", "Mathematics", "Physics", "Chemistry", "Biology", "History", "Geography"],
+    "teachers": [
+        {
+            "id": 1,
+            "image": "/image/teacher1.webp",
+            "name": "John Doe",
+            "subject": "Mathematics",
+            "email": "he.com",
+            "phone": "123-456-7890",
+            "address": "123 Main St, Cityville",
+            "education": "PhD in Mathematics",
+            "experience": "10 years"
+        },
+        {
+            "id": 2,
+            "image": "/image/teacher1.webp",
+            "name": "Jane Smith",
+            "subject": "Physics",
+            "email": "she.com",
+            "phone": "987-654-3210",
+            "address": "456 Elm St, Townsville",
+            "education": "MSc in Physics",
+            "experience": "8 years"
+        },
+        {
+            "id": 3,
+            "image": "/image/teacher1.webp",
+            "name": "Alice Johnson",
+            "subject": "Chemistry",
+            "email": "they.com",
+            "phone": "555-123-4567",
+            "address": "789 Oak St, Villageville",
+            "education": "BSc in Chemistry",
+            "experience": "5 years"
+        },
+        {
+            "id": 4,
+            "image": "/image/teacher1.webp",
+            "name": "Bob Brown",
+            "subject": "Biology",
+            "email": "them.com",
+            "phone": "444-987-6543",
+            "address": "321 Pine St, Hamletville",
+            "education": "PhD in Biology",
+            "experience": "12 years"
+        },
+        {
+            "id": 5,
+            "image": "/image/teacher1.webp",
+            "name": "Charlie Green",
+            "subject": "History",
+            "email": "us.com",
+            "phone": "222-333-4444",
+            "address": "654 Maple St, Boroughville",
+            "education": "MA in History",
+            "experience": "7 years"
+        },
+        {
+            "id": 6,
+            "image": "/image/teacher1.webp",
+            "name": "Diana White",
+            "subject": "Geography",
+            "email": "we.com",
+            "phone": "111-222-3333",
+            "address": "987 Cedar St, Districtville",
+            "education": "MSc in Geography",
+            "experience": "6 years"
+        },
+        {
+            "id": 7,
+            "image": "/image/teacher1.webp",
+            "name": "Ethan Black",
+            "subject": "Mathematics",
+            "email": "our.com",
+            "phone": "888-999-0000",
+            "address": "135 Birch St, Regionville",
+            "education": "PhD in English Literature",
+            "experience": "9 years"
+        },
+        {
+            "id": 8,
+            "image": "/image/teacher1.webp",
+            "name": "Fiona Blue",
+            "subject": "Mathematics",
+            "email": "your.com",
+            "phone": "777-888-9999",
+            "address": "246 Spruce St, Sectorville",
+            "education": "MSc in Computer Science",
+            "experience": "4 years"
+        },
+        {
+            "id": 9,
+            "image": "/image/teacher1.webp",
+            "name": "George Yellow",
+            "subject": "History",
+            "email": "my.com",
+            "phone": "333-444-5555",
+            "address": "357 Fir St, Zoneville",
+            "education": "BA in Art History",
+            "experience": "3 years"
+        },
+        {
+            "id": 10,
+            "image": "/image/teacher1.webp",
+            "name": "Hannah Purple",
+            "subject": "Mathematics",
+            "email": "his.com",
+            "phone": "666-777-8888",
+            "address": "468 Willow St, AreaVille",
+            "education": "MA in Music Theory",
+            "experience": "2 years"
+        }]
+}
