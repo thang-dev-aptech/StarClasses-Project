@@ -1,4 +1,4 @@
-import "./contact.css";
+import "../assets/css/contact.css";
 import { useState } from "react";
 export const Contact = () => {
   const [formData, setFormData] = useState({
@@ -81,7 +81,7 @@ export const Contact = () => {
       <div className="container bg-white py-5 ">
         <div className="text-center mb-5">
           <h1 className="fw-bold display-5">Contact Us</h1>
-          <p className="text-secondary">
+          <p className="text-secondary fs-5">
             Have questions? We're here to help. Reach out to us using the form
             below.
           </p>

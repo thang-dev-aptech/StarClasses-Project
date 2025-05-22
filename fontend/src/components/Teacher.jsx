@@ -13,7 +13,7 @@ export default function Teachers() {
 
     return (
         <div className="text-center">
-            <h1 className="fw-bold fs-1 text-capitalize">Meet our expert teachers</h1>
+            <h1 className="fw-bold display-5 text-capitalize">Meet our expert teachers</h1>
             <p className="text-secondary fs-5">Our team of highly qualified educator are dedicated to helping you succeed</p>
             <div className="row mx-5">
                 <div>
@@ -30,7 +30,7 @@ export default function Teachers() {
                         ))}
                     </ul>
                 </div>
-<div className="row align-items-stretch">
+<div className="row align-items-stretch mx-2">
     {filteredTeachers.map((teacher) => (
         <div key={teacher.id} className="col-12 col-sm-6 col-lg-4 mb-4">
             <div className="p-4 border rounded shadow text-start h-100">
