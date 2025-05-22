@@ -1,5 +1,6 @@
 import "../assets/css/contact.css";
 import { useState } from "react";
+import { ButtonCustom } from "../components/ButtonCustom";
 export const Contact = () => {
   const [formData, setFormData] = useState({
     first_name: "",
@@ -29,7 +30,7 @@ export const Contact = () => {
     }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     if (!formData.first_name) {
       setErrorMessage((prev) => ({
@@ -199,12 +200,11 @@ export const Contact = () => {
                   </div>
                 </div>
 
-                <button
-                  type="submit"
+                <ButtonCustom
+                  text="Send Message"
                   className="btn btn-warning w-100 fw-semibold"
-                >
-                  Send Message
-                </button>
+                  onClick={handleSubmit}
+                />
               </form>
             </div>
           </div>
