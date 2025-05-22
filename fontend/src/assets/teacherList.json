@@ -110,5 +110,154 @@
             "address": "468 Willow St, AreaVille",
             "education": "MA in Music Theory",
             "experience": "2 years"
+        }],
+    "courses": [
+        {
+            "id": 1,
+            "name": "Mathematics 101",
+            "description": "An introduction to basic mathematical concepts.",
+            "subject": "Mathematics",
+            "image": "/image/course.webp",
+            "duration": "3 months",
+            "idTeacher": 1,
+            "price": "$300",
+            "rating": 4.5,
+            "reviews": [
+                {
+                    "id": 1,
+                    "name": "Alice",
+                    "review": "Great course! Very informative.",
+                    "rating": 5
+                },
+                {
+                    "id": 2,
+                    "name": "Bob",
+                    "review": "Good course, but could use more examples.",
+                    "rating": 4
+                }
+            ]
+        },
+        {
+            "id": 2,
+            "name": "Physics 101",
+            "description": "Fundamentals of physics and its applications.",
+            "subject": "Physics",
+            "image": "/image/course.webp",
+            "duration": "4 months",
+            "idTeacher": 2,
+            "price": "$400",
+            "rating": 4.7,
+            "reviews": [
+                {
+                    "id": 1,
+                    "name": "Charlie",
+                    "review": "Very engaging and well-structured.",
+                    "rating": 5
+                },
+                {
+                    "id": 2,
+                    "name": "Diana",
+                    "review": "Interesting content, but a bit fast-paced.",
+                    "rating": 4
+                }
+            ]
+        },
+        {
+            "id": 3,
+            "name": "Chemistry 101",
+            "description": "Basic principles of chemistry and laboratory techniques.",
+            "subject": "Chemistry",
+            "image": "/image/course.webp",
+            "duration": "3 months",
+            "idTeacher": 3,
+            "price": "$350",
+            "rating": 4.6,
+            "reviews": [
+                {
+                    "id": 1,
+                    "name": "Ethan",
+                    "review": "Excellent course with practical applications.",
+                    "rating": 5
+                },
+                {
+                    "id": 2,
+                    "name": "Fiona",
+                    "review": "Good course, but the lab sessions were too short.",
+                    "rating": 4
+                },
+                {
+                    "id": 3,
+                    "name": "George",
+                    "review": "Very informative, but a bit challenging.",
+                    "rating": 4
+                }
+            ]
+        },
+        {
+            "id": 4,
+            "name": "Biology 101",
+            "description": "Introduction to biological sciences.",
+            "subject": "Biology",
+            "image": "/image/course.webp",
+            "duration": "4 months",
+            "idTeacher": 4,
+            "price": "$450",
+            "rating": 4.8,
+            "reviews": [
+                {
+                    "id": 1,
+                    "name": "Hannah",
+                    "review": "Great course"
+                }]
+        },
+        {
+            "id": 5,
+            "name": "History 101",
+            "description": "Overview of world history from ancient to modern times.",
+            "subject": "History",
+            "image": "/image/course.webp",
+            "duration": "5 months",
+            "idTeacher": 5,
+            "price": "$500",
+            "rating": 4.9,
+            "reviews": [
+                {
+                    "id": 1,
+                    "name": "Alice",
+                    "review": "Very comprehensive and well-researched.",
+                    "rating": 5
+                },
+                {
+                    "id": 2,
+                    "name": "Bob",
+                    "review": "Interesting course, but a bit lengthy.",
+                    "rating": 4
+                }
+            ]
+        },
+        {
+            "id": 6,
+            "name": "Geography 101",
+            "description": "Study of the Earth's landscapes, environments, and the relationships between people and their environments.",
+            "subject": "Geography",
+            "image": "/image/course.webp",
+            "duration": "4 months",
+            "idTeacher": 6,
+            "price": "$400",
+            "rating": 4.7,
+            "reviews": [
+                {
+                    "id": 1,
+                    "name": "Charlie",
+                    "review": "Very informative and engaging.",
+                    "rating": 5
+                },
+                {
+                    "id": 2,
+                    "name": "Diana",
+                    "review": "Good course, but could use more real-world examples.",
+                    "rating": 4
+                }
+            ]
         }]
 }

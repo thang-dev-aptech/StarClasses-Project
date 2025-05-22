@@ -1,19 +1,20 @@
 import React, { useState } from 'react';
-import TeacherBox from './elements/TeacherBox';
+import CourseBox from './elements/CourseBox';
 import teacherList from '../assets/teacherList.json';
 import '../assets/css/teacher.css';
 
-export default function Teacher() {
+export default function Course() {
     const [selectedSubject, setSelectedSubject] = useState(0);
     const selectedSubjectName = teacherList.subjects[selectedSubject];
-    const filteredTeachers = selectedSubject === 0 ? teacherList.teachers : teacherList.teachers.filter(
-        teacher => teacher.subject === selectedSubjectName
+    const filteredCourses = selectedSubject === 0 ? teacherList.courses : teacherList.courses.filter(
+        course => course.subject === selectedSubjectName
     );
+    
 
     return (
-        <div className="text-center">
-            <h1 className="fw-bold display-5 text-capitalize">Meet our expert teachers</h1>
-            <p className="text-secondary fs-5">Our team of highly qualified educator are dedicated to helping you succeed</p>
+        <div className="text-center mb-5">
+            <h1 className="fw-bold display-5 text-capitalize">Our Classes</h1>
+            <p className="text-secondary fs-5">Explore our wide range of courses designed to help you excel in your academic journey.</p>
             <div className="row mx-5">
                 <div>
                     <ul className="d-inline-flex flex-wrap gap-2 bg-body-secondary p-2 border rounded justify-content-center">
@@ -30,9 +31,9 @@ export default function Teacher() {
                     </ul>
                 </div>
                 <div className="row align-items-stretch mx-2">
-                    {filteredTeachers.map((teacher) => (
-                        <div key={teacher.id} className="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
-                            <TeacherBox teacher={teacher} />
+                    {filteredCourses.map((course) => (
+                        <div key={course.id} className="col-12 col-md-6 col-lg-4 mb-4">
+                            <CourseBox course={course} />
                         </div>
                     ))}
                 </div>
