@@ -71,27 +71,35 @@ class Course extends BaseModel {
 
     // Thêm mới khóa học
     public function create($data) {
-        $sql = "INSERT INTO {$this->table} (course_name, description, short_description, price, category, image, is_active, rating, rating_count) VALUES (:course_name, :description, :short_description, :price, :category, :image, :is_active, :rating, :rating_count)";
-        $this->db->query($sql, [
-            'course_name' => $data['course_name'],
-            'description' => $data['description'],
-            'short_description' => $data['short_description'],
-            'price' => $data['price'],
-            'category' => $data['category'],
-            'image' => $data['image'],
-            'is_active' => $data['is_active'] ?? 1,
-            'rating' => $data['rating'] ?? 0,
-            'rating_count' => $data['rating_count'] ?? 0
-        ]);
-        return $this->db->getConnection()->lastInsertId();
+        try {
+            $columns = implode(', ', array_keys($data));
+            $values = ':' . implode(', :', array_keys($data));
+            
+            $sql = "INSERT INTO {$this->table} ($columns) VALUES ($values)";
+            $this->db->query($sql, $data);
+            
+            return $this->db->getConnection()->lastInsertId();
+        } catch (\PDOException $e) {
+            error_log("Create Course Error: " . $e->getMessage());
+            throw new \Exception('Failed to create course');
+        }
     }
 
     // Cập nhật khóa học
     public function update($id, $data) {
-        $sql = "UPDATE {$this->table} SET course_name = :course_name, description = :description, short_description = :short_description, price = :price, category = :category, image = :image, is_active = :is_active, rating = :rating, rating_count = :rating_count WHERE id = :id";
-        $data['id'] = $id;
-        $this->db->query($sql, $data);
-        return true;
+        try {
+            $setClause = implode(', ', array_map(function($key) {
+                return "$key = :$key";
+            }, array_keys($data)));
+            
+            $data['id'] = $id;
+            $sql = "UPDATE {$this->table} SET $setClause WHERE id = :id";
+            
+            return $this->db->query($sql, $data);
+        } catch (\PDOException $e) {
+            error_log("Update Course Error: " . $e->getMessage());
+            throw new \Exception('Failed to update course');
+        }
     }
 
     // Xóa khóa học
@@ -106,5 +114,13 @@ class Course extends BaseModel {
         $sql = "SELECT * FROM {$this->table} WHERE course_name = :name LIMIT 1";
         $stmt = $this->db->query($sql, ['name' => $name]);
         return $stmt->fetch();
+    }
+
+    // Get recent courses
+    public function getRecent($limit = 5) {
+        $limit = (int)$limit;
+        $sql = "SELECT * FROM {$this->table} ORDER BY created_at DESC LIMIT $limit";
+        $stmt = $this->db->query($sql);
+        return $stmt->fetchAll();
     }
 }

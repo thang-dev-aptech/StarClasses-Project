@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/../bootstrap.php';
 require_once __DIR__ . '/../vendor/autoload.php';
+use App\Core\Router;
 // Enable error reporting for development
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
@@ -96,7 +97,7 @@ if (strpos($path, '/api/') === 0) {
     require __DIR__ . '/../app/routes/api.php';
     exit();
 }
-
+$router->handle();
 // Debug output
 error_log("Requested path: " . $path);
 

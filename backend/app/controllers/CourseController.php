@@ -72,9 +72,7 @@ class CourseController extends BaseController {
                 'price' => $_POST['price'],
                 'category' => $_POST['category'],
                 'image_path' => $imagePath, // Sửa thành image_path để match với DB
-                'is_active' => isset($_POST['is_active']) ? 1 : 0,
-                'rating' => $_POST['rating'] ?? 0,
-                'rating_count' => $_POST['rating_count'] ?? 0
+                'is_active' => isset($_POST['is_active']) ? 1 : 0
             ];
 
             $courseId = $this->courseModel->create($courseData);
@@ -116,9 +114,7 @@ class CourseController extends BaseController {
                 'price' => $_POST['price'],
                 'category' => $_POST['category'],
                 'image' => null,
-                'is_active' => isset($_POST['is_active']) ? 1 : 0,
-                'rating' => $_POST['rating'] ?? 0,
-                'rating_count' => $_POST['rating_count'] ?? 0
+                'is_active' => isset($_POST['is_active']) ? 1 : 0
             ];
 
             // Handle file upload if new image is provided
