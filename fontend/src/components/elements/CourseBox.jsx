@@ -2,13 +2,13 @@ import { Star } from 'lucide-react';
 
 export default function CourseBox({ course }) {
     return (
-        <div className="border rounded shadow text-start h-100">
-            <div className="d-flex">
+        <div className="rounded shadow text-start h-100 overflow-hidden">
+            <div className="">
                 <img
                     src={course.image}
                     alt={course.name}
-                    className="img-fluid shadow-sm"
-                    // style={{ width: '120px', height: '120px', objectFit: 'cover' }}
+                    className="img-fluid"
+                    style={{objectFit: 'cover' }}
                 />
             </div>
             <div className="p-4">
@@ -21,7 +21,7 @@ export default function CourseBox({ course }) {
                     <span className="text-gray-500">({course.reviews.length} student)</span>
                 </div>
 
-                <button className="w-full bg-warning text-dark font-semibold py-2 rounded-md">
+                <button className="w-full bg-warning text-dark py-2 rounded-md">
                     Đăng kí tư vấn
                 </button>
             </div>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import CourseBox from './elements/CourseBox';
 import teacherList from '../assets/teacherList.json';
-import '../assets/css/teacher.css';
+import '../assets/css/component.css';
 
 export default function Course() {
     const [selectedSubject, setSelectedSubject] = useState(0);
@@ -12,7 +12,7 @@ export default function Course() {
     
 
     return (
-        <div className="text-center mb-5">
+        <div className="text-center pt-5" id='course'>
             <h1 className="fw-bold display-5 text-capitalize">Our Classes</h1>
             <p className="text-secondary fs-5">Explore our wide range of courses designed to help you excel in your academic journey.</p>
             <div className="row mx-5">
