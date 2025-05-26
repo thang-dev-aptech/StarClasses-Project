@@ -8,6 +8,16 @@ header{
     height: 82px; /* **QUAN TRỌNG**: Bạn cần có một chiều cao cố định */
     background-color: #fff;
 }
+
+/* ========================== Modal ========================== */
+.modal-backdrop {
+    z-index: 1050 !important;
+}
+
+.modal {
+    z-index: 1051 !important;
+}
+
 /* ========================== sidebar ========================== */
 .logo {
     display: block;

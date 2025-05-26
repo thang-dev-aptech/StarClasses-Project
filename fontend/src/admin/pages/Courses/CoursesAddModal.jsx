@@ -2,18 +2,21 @@
 import React, { useState, useEffect } from 'react';
 import { Modal, Button, Form, Row, Col } from 'react-bootstrap';
 
-function CourseAddModal({ show, onHide }) {
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+
+function CoursesAddModal({ show, onHide, onSuccess }) {
     const [formData, setFormData] = useState({
         course_name: '',
         short_description: '',
-        description: '',         // << Bổ sung
-        category: '',           // << Bổ sung
+        description: '',
+        category: '',
         price: '',
-        rating: '',             // << Bổ sung
-        rating_count: '',       // << Bổ sung
+        rating: 0,
+        rating_count: 0,
         image: null,
-        is_active: true,
+        is_active: true
     });
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         if (show) {
@@ -23,27 +26,58 @@ function CourseAddModal({ show, onHide }) {
                 description: '',
                 category: '',
                 price: '',
-                rating: '',
-                rating_count: '',
+                rating: 0,
+                rating_count: 0,
                 image: null,
-                is_active: true,
+                is_active: true
             });
         }
     }, [show]);
 
-    const handleInputChange = (event) => {
-        const { name, value, type, checked, files } = event.target;
-        setFormData(prevData => ({
-            ...prevData,
-            [name]: type === 'checkbox' ? checked : type === 'file' ? files[0] : value
+    const handleChange = (e) => {
+        const { name, value, files, type, checked } = e.target;
+        setFormData(prev => ({
+            ...prev,
+            [name]: type === 'file' ? files[0] : type === 'checkbox' ? checked : value
         }));
     };
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        console.log('Submitting Course Data:', formData);
-        alert('Khóa học đã được thêm (test)!');
-        onHide();
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setLoading(true);
+
+        const data = new FormData();
+        data.append('course_name', formData.course_name);
+        data.append('short_description', formData.short_description);
+        data.append('description', formData.description);
+        data.append('category', formData.category);
+        data.append('price', formData.price);
+        data.append('rating', formData.rating);
+        data.append('rating_count', formData.rating_count);
+        data.append('is_active', formData.is_active ? 1 : 0);
+        if (formData.image) {
+            data.append('image', formData.image);
+        }
+
+        try {
+            const response = await fetch(`${API_URL}/api/courses`, {
+                method: 'POST',
+                body: data
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to create course');
+            }
+
+            if (typeof onSuccess === 'function') {
+                onSuccess();
+            }
+            onHide();
+        } catch (error) {
+            alert('Error: ' + error.message);
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
@@ -55,137 +89,107 @@ function CourseAddModal({ show, onHide }) {
                 <Form onSubmit={handleSubmit} id="addCourseForm">
                     <Row>
                         <Col md={8}>
-                            <Form.Group className="mb-3" controlId="formCourseName">
+                            <Form.Group className="mb-3">
                                 <Form.Label>Tên khóa học <span className="text-danger">*</span></Form.Label>
                                 <Form.Control
                                     type="text"
                                     name="course_name"
                                     value={formData.course_name}
-                                    onChange={handleInputChange}
+                                    onChange={handleChange}
                                     required
                                 />
                             </Form.Group>
-
-                            <Form.Group className="mb-3" controlId="formShortDescription">
+                            <Form.Group className="mb-3">
                                 <Form.Label>Mô tả ngắn</Form.Label>
                                 <Form.Control
                                     type="text"
                                     name="short_description"
                                     value={formData.short_description}
-                                    onChange={handleInputChange}
+                                    onChange={handleChange}
                                     maxLength={255}
                                 />
                                 <Form.Text>Hiển thị trên thẻ khóa học (tối đa 255 ký tự)</Form.Text>
                             </Form.Group>
-
-                            {/* ======= BỔ SUNG MÔ TẢ CHI TIẾT ======= */}
-                            <Form.Group className="mb-3" controlId="formDescription">
+                            <Form.Group className="mb-3">
                                 <Form.Label>Mô tả chi tiết</Form.Label>
                                 <Form.Control
                                     as="textarea"
                                     rows={4}
                                     name="description"
                                     value={formData.description}
-                                    onChange={handleInputChange}
+                                    onChange={handleChange}
+                                    required
                                 />
                             </Form.Group>
-
-                            {/* ======= BỔ SUNG DANH MỤC (CHO CỘT TRÁI) ======= */}
-                            <Form.Group className="mb-3" controlId="formCategoryLeft">
-                                <Form.Label>Danh mục <span className="text-danger">*</span></Form.Label>
+                        </Col>
+                        <Col md={4}>
+                            <Form.Group className="mb-3">
+                                <Form.Label>Giá khóa học (VNĐ) <span className="text-danger">*</span></Form.Label>
+                                <Form.Control
+                                    type="number"
+                                    name="price"
+                                    value={formData.price}
+                                    onChange={handleChange}
+                                    required
+                                    min="0"
+                                    step="0.01"
+                                />
+                            </Form.Group>
+                            <Form.Group className="mb-3">
+                                <Form.Label>Danh mục (Category) <span className="text-danger">*</span></Form.Label>
                                 <Form.Select
                                     name="category"
                                     value={formData.category}
-                                    onChange={handleInputChange}
+                                    onChange={handleChange}
                                     required
                                 >
                                     <option value="">Chọn danh mục</option>
                                     <option value="programming">Programming</option>
                                     <option value="design">Design</option>
                                     <option value="business">Business</option>
-                                    {/* Thêm các option khác nếu cần */}
                                 </Form.Select>
                             </Form.Group>
-                        </Col>
-
-                        <Col md={4}>
-                            <Form.Group className="mb-3" controlId="formPrice">
-                                <Form.Label>Giá khóa học (VNĐ) <span className="text-danger">*</span></Form.Label>
-                                <Form.Control
-                                    type="number"
-                                    name="price"
-                                    value={formData.price}
-                                    onChange={handleInputChange}
-                                    required min="0" step="1000"
-                                />
-                            </Form.Group>
-
-                            {/* Bạn có 2 trường "Danh mục" trong HTML gốc, mình gộp lại thành một ở cột trái.
-                                Nếu bạn muốn có một trường select danh mục khác ở cột phải, bạn có thể thêm vào đây.
-                                Ví dụ, nếu đây là sub-category:
-                            */}
-                            {/*
-                            <Form.Group className="mb-3" controlId="formSubCategoryRight">
-                                <Form.Label>Danh mục phụ <span className="text-danger">*</span></Form.Label>
-                                <Form.Select
-                                    name="sub_category" // Đổi name cho phù hợp
-                                    value={formData.sub_category} // Thêm state cho sub_category
-                                    onChange={handleInputChange}
-                                    required
-                                >
-                                    <option value="">Chọn danh mục phụ</option>
-                                    <option value="web_dev">Web Development (Programming)</option>
-                                    <option value="mobile_dev">Mobile Development (Programming)</option>
-                                </Form.Select>
-                            </Form.Group>
-                            */}
-
-
-                            {/* ======= BỔ SUNG ĐIỂM ĐÁNH GIÁ ======= */}
-                            {/* Thông thường, rating và rating_count không phải là thứ bạn nhập tay khi thêm mới
-                                mà sẽ được tính toán hoặc để người dùng đánh giá sau.
-                                Nhưng nếu bạn vẫn muốn thêm, đây là cách:
-                            */}
-                            <Form.Group className="mb-3" controlId="formRating">
+                            <Form.Group className="mb-3">
                                 <Form.Label>Điểm đánh giá (Rating)</Form.Label>
                                 <Form.Control
                                     type="number"
                                     name="rating"
                                     value={formData.rating}
-                                    onChange={handleInputChange}
-                                    min="0" max="5" step="0.1"
+                                    onChange={handleChange}
+                                    min="0"
+                                    max="5"
+                                    step="0.1"
                                 />
                             </Form.Group>
-
-                            <Form.Group className="mb-3" controlId="formRatingCount">
+                            <Form.Group className="mb-3">
                                 <Form.Label>Số lượt đánh giá (Rating Count)</Form.Label>
                                 <Form.Control
                                     type="number"
                                     name="rating_count"
                                     value={formData.rating_count}
-                                    onChange={handleInputChange}
+                                    onChange={handleChange}
                                     min="0"
+                                    step="1"
                                 />
                             </Form.Group>
-
-                            <Form.Group className="mb-3" controlId="formImage">
+                            <Form.Group className="mb-3">
                                 <Form.Label>Ảnh đại diện</Form.Label>
                                 <Form.Control
                                     type="file"
                                     name="image"
-                                    onChange={handleInputChange}
+                                    onChange={handleChange}
                                     accept="image/*"
                                 />
                                 <Form.Text>Định dạng: JPG, PNG, GIF. Tối đa 2MB</Form.Text>
                             </Form.Group>
-
-                            <Form.Group className="mb-3" controlId="formIsActive">
+                            <Form.Group className="mb-3">
                                 <Form.Check
                                     type="switch"
+                                    id="status-switch"
                                     name="is_active"
                                     label="Hiển thị khóa học"
                                     checked={formData.is_active}
-                                    onChange={handleInputChange}
+                                    onChange={handleChange}
                                 />
                             </Form.Group>
                         </Col>
@@ -193,15 +197,15 @@ function CourseAddModal({ show, onHide }) {
                 </Form>
             </Modal.Body>
             <Modal.Footer>
-                <Button variant="secondary" onClick={onHide}>
+                <Button variant="secondary" onClick={onHide} disabled={loading}>
                     Hủy
                 </Button>
-                <Button variant="primary" type="submit" form="addCourseForm">
-                    Lưu khóa học
+                <Button variant="primary" type="submit" form="addCourseForm" disabled={loading}>
+                    {loading ? 'Đang lưu...' : 'Lưu khóa học'}
                 </Button>
             </Modal.Footer>
         </Modal>
     );
 }
 
-export default CourseAddModal;
+export default CoursesAddModal;
