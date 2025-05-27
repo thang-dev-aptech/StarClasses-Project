@@ -38,7 +38,6 @@ if (isset($_SESSION['toast'])) {
 ?>
 <!-- admin/dashboard.php -->
 <?php include __DIR__ . '/partials/header.php'; ?>
-<?php include __DIR__ . '/partials/sidebar.php'; ?>
 
 <main class="main-content bg-light">
     <!-- Toast notification -->

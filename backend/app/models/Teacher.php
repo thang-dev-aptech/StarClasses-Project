@@ -12,7 +12,7 @@ class Teacher {
         $this->db = Database::getInstance()->getConnection();
     }
 
-    public function getAll() {
+    public function getAll($search = '', $category = '') {
         $stmt = $this->db->query("SELECT * FROM teachers ORDER BY id DESC");
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }

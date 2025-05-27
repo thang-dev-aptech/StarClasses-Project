@@ -28,14 +28,14 @@ $router->get('/', function() {
 $router->get('/api/courses', 'CourseController@index');
 $router->get('/api/courses/{id}', 'CourseController@show');
 $router->post('/api/courses', 'CourseController@store');
-$router->put('/api/courses/{id}', 'CourseController@update');
+$router->post('/api/courses/{id}', 'CourseController@update');
 $router->delete('/api/courses/{id}', 'CourseController@delete');
 
 // Teacher routes
 $router->get('/api/teachers', 'TeacherController@index');
 $router->get('/api/teachers/{id}', 'TeacherController@show');
 $router->post('/api/teachers', 'TeacherController@store');
-$router->put('/api/teachers/{id}', 'TeacherController@update');
+$router->post('/api/teachers/{id}', 'TeacherController@update');
 $router->delete('/api/teachers/{id}', 'TeacherController@delete');
 
 // Consult request routes

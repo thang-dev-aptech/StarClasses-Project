@@ -6,6 +6,14 @@ use App\Core\Router;
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
+header('Access-Control-Allow-Headers: Content-Type, Authorization');
+
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    http_response_code(200);
+    exit;
+}
 // Get the request path
 $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $path = rtrim($path, '/');
@@ -95,9 +103,10 @@ if ($path === '/admin/logout') {
 // Handle API routes
 if (strpos($path, '/api/') === 0) {
     require __DIR__ . '/../app/routes/api.php';
+    $router->handle();
     exit();
 }
-$router->handle();
+
 // Debug output
 error_log("Requested path: " . $path);
 
