@@ -3,7 +3,7 @@ import { Modal, Button, Form } from 'react-bootstrap';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
 
-function TeacherAddModal({ show, onHide, onSuccess }) {
+function TeacherAddModal({ show, onHide, onSuccess, teacher, isEdit }) {
     const [formData, setFormData] = useState({
         name: '',
         category: 'programming',
@@ -17,17 +17,29 @@ function TeacherAddModal({ show, onHide, onSuccess }) {
 
     useEffect(() => {
         if (show) {
-            setFormData({
-                name: '',
-                category: 'programming',
-                subject: '',
-                experience: '',
-                bio: '',
-                status: true,
-                image: null
-            });
+            if (isEdit && teacher) {
+                setFormData({
+                    name: teacher.teacher_name || '',
+                    category: teacher.category || 'programming',
+                    subject: teacher.subject || '',
+                    experience: teacher.experience || '',
+                    bio: teacher.bio || '',
+                    status: teacher.is_active ? true : false,
+                    image: null
+                });
+            } else {
+                setFormData({
+                    name: '',
+                    category: 'programming',
+                    subject: '',
+                    experience: '',
+                    bio: '',
+                    status: true,
+                    image: null
+                });
+            }
         }
-    }, [show]);
+    }, [show, isEdit, teacher]);
 
     const handleChange = (e) => {
         const { name, value, files, type, checked } = e.target;
@@ -51,16 +63,24 @@ function TeacherAddModal({ show, onHide, onSuccess }) {
             data.append('image', formData.image);
         }
         try {
-            const response = await fetch(`${API_URL}/api/teachers`, {
-                method: 'POST',
-                body: data
-            });
-            const result = await response.json();
+            let response, result;
+            if (isEdit && teacher) {
+                response = await fetch(`${API_URL}/api/teachers/${teacher.id}`, {
+                    method: 'POST', // PATCH/PUT tuỳ backend, ở đây dùng POST kèm _method
+                    body: (() => { data.append('_method', 'PUT'); return data; })()
+                });
+            } else {
+                response = await fetch(`${API_URL}/api/teachers`, {
+                    method: 'POST',
+                    body: data
+                });
+            }
+            result = await response.json();
             if (response.ok && (result.status === 'success' || result.id || result.data)) {
                 if (typeof onSuccess === 'function') onSuccess();
                 onHide();
             } else {
-                alert('Error: ' + (result.message || 'Could not add teacher'));
+                alert('Error: ' + (result.message || 'Could not save teacher'));
             }
         } catch {
             alert('Server connection error!');
@@ -72,10 +92,10 @@ function TeacherAddModal({ show, onHide, onSuccess }) {
     return (
         <Modal show={show} onHide={onHide} size="lg" centered backdrop="static" keyboard={false}>
             <Modal.Header closeButton>
-                <Modal.Title>Add New Teacher</Modal.Title>
+                <Modal.Title>{isEdit ? 'Edit Teacher' : 'Add New Teacher'}</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <Form onSubmit={handleSubmit} id="addTeacherForm">
+                <Form onSubmit={handleSubmit} id={isEdit ? 'editTeacherForm' : 'addTeacherForm'}>
                     <div className="row">
                         <div className="col-md-8">
                             <Form.Group className="mb-3">
@@ -149,6 +169,12 @@ function TeacherAddModal({ show, onHide, onSuccess }) {
                                 <div className="form-text">
                                     Formats: JPG, PNG, GIF. Max 2MB
                                 </div>
+                                {isEdit && teacher && teacher.image && (
+                                    <div className="mt-2">
+                                        <img src={`${API_URL}/${teacher.image}`} alt="Current" style={{width: 80, height: 80, objectFit: 'cover', borderRadius: 4, border: '1px solid #e3e6f0'}} />
+                                        <div className="small text-muted">Current image</div>
+                                    </div>
+                                )}
                             </Form.Group>
                             <Form.Group className="mb-3 d-flex align-items-center gap-2">
                                 <Form.Check
@@ -170,8 +196,8 @@ function TeacherAddModal({ show, onHide, onSuccess }) {
                 <Button variant="secondary" onClick={onHide} disabled={loading}>
                     Cancel
                 </Button>
-                <Button variant="primary" type="submit" form="addTeacherForm" disabled={loading}>
-                    {loading ? 'Saving...' : 'Save Teacher'}
+                <Button variant="primary" type="submit" form={isEdit ? 'editTeacherForm' : 'addTeacherForm'} disabled={loading}>
+                    {loading ? (isEdit ? 'Saving...' : 'Saving...') : (isEdit ? 'Save Changes' : 'Save Teacher')}
                 </Button>
             </Modal.Footer>
         </Modal>

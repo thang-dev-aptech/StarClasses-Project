@@ -124,3 +124,75 @@ color: #fff;
     border-radius: 4px;
     border: 1px solid #e3e6f0;
 }
+
+
+
+
+
+/* ========================== Dashboard Stats Row ========================== */
+.dashboard-stats-row .stats-card {
+    min-height: 120px;
+    border-radius: 1rem;
+    transition: box-shadow 0.2s;
+    box-shadow: 0 2px 12px 0 rgba(80, 80, 120, 0.07);
+}
+.dashboard-stats-row .stats-card:hover {
+    box-shadow: 0 4px 24px 0 rgba(80, 80, 120, 0.13);
+}
+.dashboard-stats-row .stats-icon {
+    font-size: 2.5rem;
+    width: 56px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #f8fafc 60%, #e3e6f0 100%);
+    border-radius: 1rem;
+    margin-right: 10px;
+    box-shadow: 0 2px 8px 0 rgba(80, 80, 120, 0.07);
+}
+
+/* ========================== Dashboard Latest Row ========================== */
+.dashboard-latest-row .card,
+.dashboard-feedback-row .card {
+    min-height: 340px;
+    border-radius: 1rem;
+    box-shadow: 0 2px 12px 0 rgba(80, 80, 120, 0.07);
+}
+.dashboard-latest-row .card-header,
+.dashboard-feedback-row .card-header {
+    border-bottom: 1px solid #e3e6f0;
+    background: #f8f9fc;
+    border-radius: 1rem 1rem 0 0;
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+.dashboard-latest-row .list-group-item,
+.dashboard-feedback-row .list-group-item {
+    border: none;
+    border-bottom: 1px solid #f1f1f1;
+    background: transparent;
+    transition: background 0.15s;
+}
+.dashboard-latest-row .list-group-item:last-child,
+.dashboard-feedback-row .list-group-item:last-child {
+    border-bottom: none;
+}
+.dashboard-latest-row .list-group-item:hover,
+.dashboard-feedback-row .list-group-item:hover {
+    background: #f8f9fc;
+    cursor: pointer;
+}
+
+/* ========================== Responsive Dashboard ========================== */
+@media (max-width: 767px) {
+    .dashboard-stats-row .col-md-4,
+    .dashboard-latest-row .col-md-6 {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+    .dashboard-latest-row,
+    .dashboard-feedback-row {
+        margin-top: 1rem;
+    }
+}

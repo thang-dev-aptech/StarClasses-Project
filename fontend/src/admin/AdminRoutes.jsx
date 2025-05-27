@@ -5,10 +5,9 @@ import ProtectedRoute from './components/auth/ProtectedRoute';
 import AdminLayout from './components/layouts/AdminLayout';
 import AdminLoginPage from './pages/AdminLoginPage';
 import DashboardPage from './pages/DashboardPage';
-import CoursesAddPage from './pages/Courses/CoursesAddModal';
 import CoursesListPage from './pages/Courses/CoursesListPage';
-import TeachersListPage from './pages/TeachersListPage';
-
+import TeachersListPage from '@/admin/pages/Teachers/TeacherListPage';
+import ConsultListPage from '@/admin/pages/ConsultListPage';
 const AdminRoutes = () => (
     <Routes>
         <Route path="login" element={<AdminLoginPage />} />
@@ -18,7 +17,7 @@ const AdminRoutes = () => (
             <Route path="dashboard" element={<DashboardPage />} />
             <Route path="courses" element={<CoursesListPage />} />
             <Route path="teachers" element={<TeachersListPage />} />
-            
+            <Route path="consults" element={<ConsultListPage />} />
         </Route>
     </Routes>
 );

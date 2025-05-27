@@ -23,7 +23,7 @@ const Sidebar = () => {
     {
       title: 'Phản hồi',
       icon: 'chat-square-text',
-      path: '/admin/consult'
+      path: '/admin/consults'
     }
   ];
 
@@ -58,23 +58,6 @@ const Sidebar = () => {
           ))}
         </ul>
       </nav>
-
-      {/* Footer */}
-      <div className="position-absolute bottom-0 w-100 p-3 border-top">
-        <div className="d-flex align-items-center">
-          <img
-            src="/admin/assets/images/avatar.png"
-            alt="Admin"
-            className="rounded-circle"
-            width="32"
-            height="32"
-          />
-          <div className="ms-2">
-            <div className="fw-bold">Admin</div>
-            <div className="small text-muted">Administrator</div>
-          </div>
-        </div>
-      </div>
     </div>
   );
 };
