@@ -38,10 +38,13 @@ class TeacherController extends BaseController {
 
     public function store() {
         $errors = $this->validateRequest([
-            'teacher_name' => 'required|min:3',
-            'category' => 'required',
+            'full_name' => 'required|min:3',
+            'avatar_url' => 'required',
             'subject' => 'required',
-            'experience' => 'required',
+            'experience_years' => 'required',
+            'education' => 'required',
+            'achievements' => 'required',
+            'bio' => 'required',
         ]);
 
         if (!empty($errors)) {
@@ -56,13 +59,14 @@ class TeacherController extends BaseController {
             }
 
             $teacherData = [
-                'teacher_name' => $_POST['teacher_name'],
-                'category' => $_POST['category'],
+                'full_name' => $_POST['full_name'],
+                'avatar_url' => $_POST['avatar_url'],
                 'subject' => $_POST['subject'],
-                'experience' => $_POST['experience'],
+                'experience_years' => $_POST['experience_years'],
+                'education' => $_POST['education'],
+                'achievements' => $_POST['achievements'],
                 'bio' => $_POST['bio'] ?? null,
-                'image' => $imagePath,
-                'is_active' => isset($_POST['is_active']) ? 1 : 0
+                'avatar_url' => $imagePath,
             ];
 
             $teacher = $this->teacherModel->create($teacherData);

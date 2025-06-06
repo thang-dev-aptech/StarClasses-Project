@@ -32,8 +32,8 @@ const DashboardPage = () => {
         <div className="col-md-6">
           <div className="card border-0 shadow-sm h-100">
             <div className="card-header bg-white py-3 d-flex justify-content-between align-items-center">
-              <h5 className="mb-0">Khóa học mới nhất</h5>
-              <a href="/admin/courses" className="btn btn-sm btn-primary">Xem tất cả</a>
+              <h5 className="mb-0">Latest Courses</h5>
+              <a href="/admin/courses" className="btn btn-sm btn-primary">View All</a>
             </div>
             <div className="card-body p-0">
               <div className="list-group list-group-flush">
@@ -45,8 +45,8 @@ const DashboardPage = () => {
         <div className="col-md-6">
           <div className="card border-0 shadow-sm h-100">
             <div className="card-header bg-white py-3 d-flex justify-content-between align-items-center">
-              <h5 className="mb-0">Giáo viên mới nhất</h5>
-              <a href="/admin/teachers" className="btn btn-sm btn-primary">Xem tất cả</a>
+              <h5 className="mb-0">Latest Teachers</h5>
+              <a href="/admin/teachers" className="btn btn-sm btn-primary">View All</a>
             </div>
             <div className="card-body p-0">
               <div className="list-group list-group-flush">
@@ -60,8 +60,8 @@ const DashboardPage = () => {
         <div className="col-12">
           <div className="card border-0 shadow-sm h-100">
             <div className="card-header bg-white py-3 d-flex justify-content-between align-items-center">
-              <h5 className="mb-0">Phản hồi mới nhất</h5>
-              <a href="/admin/consults" className="btn btn-sm btn-primary">Xem tất cả</a>
+              <h5 className="mb-0">Latest Consultations</h5>
+              <a href="/admin/consults" className="btn btn-sm btn-primary">View All</a>
             </div>
             <div className="card-body p-0">
               <div className="list-group list-group-flush">

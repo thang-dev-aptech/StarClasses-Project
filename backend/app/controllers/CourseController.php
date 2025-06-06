@@ -58,12 +58,13 @@ class CourseController extends BaseController {
             $courseData = [
                 'course_name' => $_POST['course_name'],
                 'description' => $_POST['description'],
-                'short_description' => $_POST['short_description'] ?? '',
                 'price' => $_POST['price'],
                 'category' => $_POST['category'],
-                'rating' => $_POST['rating'],
-                'rating_count' => $_POST['rating_count'],
-                'image' => $imagePath,
+                'teacher_id' => $_POST['teacher_id'],
+                'overview' => $_POST['overview'],
+                'schedule' => $_POST['schedule'],
+                'learning_outcomes' => $_POST['learning_outcomes'],
+                'image_url' => $imagePath,
                 'is_active' => isset($_POST['is_active']) ? 1 : 0
             ];
 

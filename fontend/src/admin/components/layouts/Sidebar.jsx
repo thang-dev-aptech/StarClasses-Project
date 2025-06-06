@@ -11,17 +11,17 @@ const Sidebar = () => {
       path: '/admin/dashboard'
     },
     {
-      title: 'Khóa học',
+      title: 'Courses',
       icon: 'book',
       path: '/admin/courses'
     },
     {
-      title: 'Giáo viên',
+      title: 'Teachers',
       icon: 'person-video3',
       path: '/admin/teachers'
     },
     {
-      title: 'Phản hồi',
+      title: 'Consults',
       icon: 'chat-square-text',
       path: '/admin/consults'
     }

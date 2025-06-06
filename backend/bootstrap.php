@@ -43,29 +43,8 @@ use App\Core\{Database, Logger, ErrorHandler};
 error_log("Current directory: " . __DIR__);
 error_log("Looking for .env in: " . __DIR__ . '/.env');
 
-// Check if .env file exists
-if (!file_exists(__DIR__ . '/.env')) {
-    die('.env file not found in ' . __DIR__);
-}
 
-// Debug loaded variables
-error_log("Loaded ENV variables:");
-error_log("DB_HOST: " . ($_ENV['DB_HOST'] ?? 'not set'));
-error_log("DB_USERNAME: " . ($_ENV['DB_USERNAME'] ?? 'not set'));
-error_log("DB_DATABASE: " . ($_ENV['DB_DATABASE'] ?? 'not set'));
 
-// Check required variables
-$required = ['DB_HOST', 'DB_USERNAME', 'DB_DATABASE'];
-$missing = [];
-foreach ($required as $var) {
-    if (empty($_ENV[$var])) {
-        $missing[] = $var;
-    }
-}
-
-if (!empty($missing)) {
-    die('Missing required environment variables: ' . implode(', ', $missing));
-}
 
 // Initialize error handler
 $errorHandler = new ErrorHandler();

@@ -97,17 +97,4 @@ class Course extends BaseModel {
         }
     }
 
-    // Get recent courses
-    public function getRecent($limit = 5) {
-        try {
-            $limit = (int)$limit;
-            $sql = "SELECT * FROM {$this->table} ORDER BY created_at DESC LIMIT $limit";
-            $stmt = $this->db->query($sql);
-            return $stmt->fetchAll();
-        } catch (\PDOException $e) {
-            error_log("Get Recent Courses Error: " . $e->getMessage());
-            throw new \Exception('Failed to get recent courses');
-        }
-    }
-
 }

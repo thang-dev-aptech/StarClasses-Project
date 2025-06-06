@@ -3,7 +3,7 @@ import TeacherAddModal from './TeacherAddModal';
 import { useOutletContext } from 'react-router-dom';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
-console.log('API_URL:', API_URL);
+
 
 function TeachersListPage() {
     const { setHeaderContent } = useOutletContext();
@@ -52,7 +52,7 @@ function TeachersListPage() {
     };
 
     const handleDelete = async (teacher) => {
-        if (!window.confirm(`Bạn có chắc chắn muốn xoá giáo viên "${teacher.teacher_name}"?`)) return;
+        if (!window.confirm(`Are you sure you want to delete teacher "${teacher.teacher_name}"?`)) return;
         try {
             const response = await fetch(`${API_URL}/api/teachers/${teacher.id}`, {
                 method: 'DELETE',
@@ -61,10 +61,10 @@ function TeachersListPage() {
             if (response.ok && (result.status === 'success' || result.message === 'Deleted')) {
                 fetchTeachers(search, categoryFilter);
             } else {
-                alert('Xoá thất bại: ' + (result.message || 'Unknown error'));
+                alert('Delete failed: ' + (result.message || 'Unknown error'));
             }
         } catch {
-            alert('Lỗi kết nối server!');
+            alert('Server connection error!');
         }
     };
 
@@ -151,11 +151,11 @@ function TeachersListPage() {
                                                 <td className="text-center">
                                                     {teacher.is_active ? (
                                                         <span className="badge bg-success-subtle text-success">
-                                                            <i className="bi bi-check-circle-fill me-1"></i>Hiển thị
+                                                            <i className="bi bi-check-circle-fill me-1"></i>Visible
                                                         </span>
                                                     ) : (
                                                         <span className="badge bg-secondary">
-                                                            <i className="bi bi-eye-slash me-1"></i>Ẩn
+                                                            <i className="bi bi-eye-slash me-1"></i>Hidden
                                                         </span>
                                                     )}
                                                 </td>

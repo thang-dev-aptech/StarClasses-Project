@@ -54,17 +54,4 @@ class BaseController {
         }
         return $errors;
     }
-
-    private function validateField($value, $rule) {
-        $rules = explode('|', $rule);
-        foreach ($rules as $r) {
-            if ($r === 'required' && empty($value)) return false;
-            if ($r === 'email' && !filter_var($value, FILTER_VALIDATE_EMAIL)) return false;
-            if (strpos($r, 'min:') === 0) {
-                $min = substr($r, 4);
-                if (strlen($value) < $min) return false;
-            }
-        }
-        return true;
-    }
 }
