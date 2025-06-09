@@ -15,7 +15,9 @@ class TeacherController extends BaseController {
 
     public function index() {
         try {
-            $teachers = $this->teacherModel->getAll();
+            $search = $_GET['search'] ?? '';
+            $category = $_GET['category'] ?? '';
+            $teachers = $this->teacherModel->getAll($search, $category);
             return $this->success($teachers);
         } catch (\Exception $e) {
             return $this->error('Failed to fetch teachers');
@@ -36,10 +38,13 @@ class TeacherController extends BaseController {
 
     public function store() {
         $errors = $this->validateRequest([
-            'teacher_name' => 'required|min:3',
-            'category' => 'required',
+            'full_name' => 'required|min:3',
+            'avatar_url' => 'required',
             'subject' => 'required',
-            'experience' => 'required',
+            'experience_years' => 'required',
+            'education' => 'required',
+            'achievements' => 'required',
+            'bio' => 'required',
         ]);
 
         if (!empty($errors)) {
@@ -54,13 +59,14 @@ class TeacherController extends BaseController {
             }
 
             $teacherData = [
-                'teacher_name' => $_POST['teacher_name'],
-                'category' => $_POST['category'],
+                'full_name' => $_POST['full_name'],
+                'avatar_url' => $_POST['avatar_url'],
                 'subject' => $_POST['subject'],
-                'experience' => $_POST['experience'],
+                'experience_years' => $_POST['experience_years'],
+                'education' => $_POST['education'],
+                'achievements' => $_POST['achievements'],
                 'bio' => $_POST['bio'] ?? null,
-                'image' => $imagePath,
-                'is_active' => isset($_POST['is_active']) ? 1 : 0
+                'avatar_url' => $imagePath,
             ];
 
             $teacher = $this->teacherModel->create($teacherData);
@@ -115,20 +121,9 @@ class TeacherController extends BaseController {
     }
 
     private function handleImageUpload($file) {
-        $uploadDir = __DIR__ . '/../../storage/uploads/teachers/';
+        $uploadDir = __DIR__ . '/../../public/uploads/teachers/';
         if (!is_dir($uploadDir)) {
             mkdir($uploadDir, 0755, true);
-        }
-
-        // Validate file type
-        $allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
-        if (!in_array($file['type'], $allowedTypes)) {
-            throw new \Exception('Invalid file type. Only JPG, PNG and GIF are allowed.');
-        }
-
-        // Validate file size (max 2MB)
-        if ($file['size'] > 2 * 1024 * 1024) {
-            throw new \Exception('File too large. Maximum size is 2MB.');
         }
 
         $extension = pathinfo($file['name'], PATHINFO_EXTENSION);

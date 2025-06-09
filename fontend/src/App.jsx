@@ -1,26 +1,20 @@
-import "bootstrap/dist/css/bootstrap.min.css";
-import Teacher from "./components/Teacher";
-import { Contact } from "./pages/Contact";
-import Course from "./components/Course";
-import Introduction from "./components/Introduction";
-import MenuBar from "./components/MenuBar";
-import Achievements from "./components/Achievements";
-import Footer from "./components/Footer";
-import React from "react";
+
+import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import AdminRoutes from './admin/AdminRoutes'
+import { Navigate } from 'react-router-dom'
 
 function App() {
 
   return (
-    <>
-      <MenuBar />
-      <Introduction />
-      <Course />
-      <Teacher />
-      <Achievements />
-      <Contact />
-      <Footer />
-    </>
-  );
+    
+      <Routes>
+        <Route path="/admin/*" element={<AdminRoutes />} />
+        <Route path="/" element={<Navigate to="/admin" replace />} />
+      </Routes>
+    
+  )
 }
+
 
 export default App;
