@@ -1,0 +1,50 @@
+[
+  {
+    "id": 1,
+    "title": "ReactJS Cơ Bản",
+    "description": "Học cách xây dựng giao diện với React cơ bản, JSX, component và state.",
+    "level": "Beginner",
+    "duration": "4 tuần",
+    "image": "react-basic.jpg"
+  },
+  {
+    "id": 2,
+    "title": "ReactJS Nâng Cao",
+    "description": "Tìm hiểu Redux, Context API, custom hook và tối ưu hiệu suất.",
+    "level": "Intermediate",
+    "duration": "6 tuần",
+    "image": "react-advanced.jpg"
+  },
+  {
+    "id": 3,
+    "title": "JavaScript Cơ Bản",
+    "description": "Nắm vững cú pháp, biến, hàm, mảng, vòng lặp và điều kiện trong JS.",
+    "level": "Beginner",
+    "duration": "3 tuần",
+    "image": "js-basic.jpg"
+  },
+  {
+    "id": 4,
+    "title": "JavaScript Nâng Cao",
+    "description": "Async/Await, Promise, closure, scope, event loop và kỹ thuật nâng cao.",
+    "level": "Intermediate",
+    "duration": "5 tuần",
+    "image": "js-advanced.jpg"
+  },
+  {
+    "id": 5,
+    "title": "HTML & CSS Cơ Bản",
+    "description": "Tạo bố cục, định dạng trang web với HTML5 và CSS3 từ đầu.",
+    "level": "Beginner",
+    "duration": "2 tuần",
+    "image": "html-css.jpg"
+  },
+  {
+    "id": 6,
+    "title": "Fullstack với MERN",
+    "description": "Xây dựng ứng dụng web hoàn chỉnh với MongoDB, Express, React, Node.",
+    "level": "Advanced",
+    "duration": "8 tuần",
+    "image": "mern.jpg"
+  }
+]

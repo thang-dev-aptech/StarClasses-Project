@@ -1,6 +1,6 @@
 import { Star } from 'lucide-react'; 
 
-export default function CourseBox({ course }) {
+export default function CourseBox({ course, onChangModal }) {
     return (
         <div className="rounded shadow text-start h-100 overflow-hidden">
             <div className="">
@@ -21,8 +21,8 @@ export default function CourseBox({ course }) {
                     <span className="text-gray-500">({course.reviews.length} student)</span>
                 </div>
 
-                <button className="w-full bg-warning text-dark py-2 rounded-md">
-                    Đăng kí tư vấn
+                <button className="w-full bg-warning text-dark py-2 rounded-md" onClick={() => onChangModal(course.id)}>
+                    Consulting registration
                 </button>
             </div>
             
