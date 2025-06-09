@@ -6,7 +6,7 @@ import '../assets/css/component.css';
 
 function MenuBar() {
   return (
-    <Navbar bg="white" expand="lg" className="border-bottom p-0" sticky="top">
+    <Navbar bg="white" expand="lg" className="border-bottom my-2" sticky="top">
       <Container>
         {/* Logo */}
         <Navbar.Brand href="#" className="d-flex align-items-center fw-bold text-dark">
@@ -16,7 +16,7 @@ function MenuBar() {
 
         {/* Navigation links */}
         <Nav className="ms-auto align-items-center fw-semibold">
-          <Nav.Link href="#" className="text-dark px-3 hover-link">
+          <Nav.Link href="#introduction" className="text-dark px-3 hover-link">
             Home
           </Nav.Link>
           <Nav.Link href="#course" className="text-dark px-3 hover-link">
@@ -25,7 +25,7 @@ function MenuBar() {
           <Nav.Link href="#teacher" className="text-dark px-3 hover-link">
             Teachers
           </Nav.Link>
-          <Nav.Link href="#" className="text-dark px-3 hover-link">
+          <Nav.Link href="#achievements" className="text-dark px-3 hover-link">
             Achievements
           </Nav.Link>
           <Nav.Link href="#contact" className="text-dark px-3 hover-link">
@@ -41,7 +41,7 @@ function MenuBar() {
               animation: "pulse 1.5s infinite",
               transformOrigin: "center"
             }}>
-            Nhận tư vấn
+            Get advice
           </Button>
         </Nav>
       </Container>

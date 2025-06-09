@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import CourseBox from './elements/CourseBox';
 import teacherList from '../assets/teacherList.json';
+import CoursePopup from './CoursePopup';
 import '../assets/css/component.css';
 
 export default function Course() {
@@ -10,6 +11,10 @@ export default function Course() {
         course => course.subject === selectedSubjectName
     );
     
+    const [selectedID, setSelectedID] = useState(null);
+    console.log("Selected ID:", selectedID);
+    
+    const selectedCourse = teacherList.courses.find(course => course.id === selectedID);
 
     return (
         <div className="text-center pt-5" id='course'>
@@ -33,12 +38,17 @@ export default function Course() {
                 <div className="row align-items-stretch mx-2">
                     {filteredCourses.map((course) => (
                         <div key={course.id} className="col-12 col-md-6 col-lg-4 mb-4">
-                            <CourseBox course={course} />
+                            <CourseBox course={course} onChangModal={setSelectedID}/>
                         </div>
                     ))}
                 </div>
 
             </div>
+            <CoursePopup
+                show={selectedID !== null}
+                onHide={() => setSelectedID(null)}
+                course={selectedCourse}
+            />
         </div>
     );
 }

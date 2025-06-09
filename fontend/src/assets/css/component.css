@@ -1,4 +1,4 @@
-/* Teacher */
+
 *{
     margin: 0;
     padding: 0;
@@ -10,8 +10,15 @@
     height: 100%;
 }
 
+/* Teacher */
+
 li{
     list-style: none;
+}
+
+a{
+    text-decoration: none;
+    color: inherit;
 }
 
 /* MenuBar */
@@ -24,5 +31,17 @@ li{
 .hover-link:hover{
     color: #ffc107 !important;
     animation: pulse 0.5s ease-in-out;
-    text-decoration: ;
 }
+
+.content-contạiner{
+    width: 1200px;
+}
+
+/* Course Modal */
+.custom-modal-header .btn-close {
+  background-color: #f0ad4e; /* màu nền */
+  border-radius: 50%;
+  padding: 0.5rem;
+  opacity: 1; /* để không bị mờ */
+}
+
