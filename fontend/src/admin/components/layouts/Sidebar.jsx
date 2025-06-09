@@ -32,7 +32,7 @@ const Sidebar = () => {
       {/* Logo */}
       <div className="border-bottom">
         <NavLink to="/admin/dashboard">
-          <img src="/src/admin/assets/images/logo_star_classes-Photoroom.png" alt="Logo" className="logo"/>
+          <img src="/src/admin/assets/images/image (1).svg" alt="Logo" className="logo"/>
         </NavLink>
       </div>
 

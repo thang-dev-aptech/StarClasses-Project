@@ -22,7 +22,8 @@ class Database {
                 ]
             );
         } catch (PDOException $e) {
-            die("Connection failed: " . $e->getMessage());
+            error_log("Database connection failed: " . $e->getMessage());
+            throw new \RuntimeException('Database connection failed', 0, $e);
         }
     }
 
@@ -33,17 +34,42 @@ class Database {
         return self::$instance;
     }
 
+    public function prepare($sql) {
+        try {
+            return $this->conn->prepare($sql);
+        } catch (PDOException $e) {
+            error_log("Prepare statement failed: " . $e->getMessage());
+            throw new \RuntimeException('Query execution failed', 0, $e);
+
+        }
+    }
+
     public function query($sql, $params = []) {
         try {
-            $stmt = $this->conn->prepare($sql);
+            $stmt = $this->prepare($sql);
             $stmt->execute($params);
             return $stmt;
         } catch (PDOException $e) {
-            die("Query failed: " . $e->getMessage());
+            error_log("Query execution failed: " . $e->getMessage());
+            throw new \Exception("Query execution failed");
+        }
+    }
+
+    public function execute($sql, $params = []) {
+        try {
+            $stmt = $this->prepare($sql);
+            return $stmt->execute($params);
+        } catch (PDOException $e) {
+            error_log("Query execution failed: " . $e->getMessage());
+            throw new \Exception("Query execution failed");
         }
     }
 
     public function getConnection() {
         return $this->conn;
+    }
+
+    public function lastInsertId() {
+        return $this->conn->lastInsertId();
     }
 }

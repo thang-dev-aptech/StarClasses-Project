@@ -1,58 +1,64 @@
 <?php
+// kiểm tra kiểu chặt chẽ khi gọi hàm tránh lỗi ví dụ "5" + 3
+declare(strict_types=1);
 
-// Load environment variables
-$envFile = __DIR__ . '/.env';
-if (file_exists($envFile)) {
-    $lines = file($envFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-    foreach ($lines as $line) {
-        if (strpos($line, '=') !== false && strpos($line, '#') !== 0) {
-            list($key, $value) = explode('=', $line, 2);
-            $key = trim($key);
-            $value = trim($value);
-            $_ENV[$key] = $value;
-            putenv("$key=$value");
+// đọc file env 
+$ENV = [];
+$envPath = __DIR__ . '/.env';
+// kiểm tra file .env có tồn tại hay ko 
+if(is_Readable($envPath)){
+    // đọc file env 
+    $lines = file($envPath, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+    foreach($lines as $line){
+        $line = trim($line);
+        // kiểm tra xem $line có rỗng hoặc bắt đầu bằng # thì mình sẽ bỏ qua 
+        if($line === '' || str_starts_with($line, '#')){
+            continue;
         }
+        // tách key và value 
+        [$key, $value] = Array_map('trim', explode('=', $line, 2) + [1 => NULL]);
+        // gán key vào mảng 
+        $ENV[$key] = $value;
+        // gán key vào biến môi trường 
+        putenv("$key=$value");
+        // gán key vào $_ENV
+        $_ENV[$key] = $value;
     }
 }
 
-// Error reporting
+// chế độ hiển thị lỗi khi ở development
+// error_reporting cho phép báo những lỗi gì 
+// display_errors bật tắt hiển thị báo lỗi 
 error_reporting(E_ALL);
-ini_set('display_errors', 1);
+ini_set('display_errors', '1');
 
-// Autoload classes
-spl_autoload_register(function ($class) {
-    $prefix = 'App\\';
-    $base_dir = __DIR__ . '/app/';
+// autoloader 
+require_once __DIR__ . '/vendor/autoload.php';
 
-    $len = strlen($prefix);
-    if (strncmp($prefix, $class, $len) !== 0) {
-        return;
-    }
+// CORS header 
+header('Access-Control-Allow-Origin: ' . ($ENV['CORS_ALLOW_ORIGIN'] ?? '*'));
+header('Access-Control-Allow-Methods: GET, POST, PUT, PATCH, DELETE, OPTIONS');
+header('Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With');
 
-    $relative_class = substr($class, $len);
-    $file = $base_dir . str_replace('\\', '/', $relative_class) . '.php';
+// security header
+header('X-Content-Type-Options: nosniff');
+header('X-Frame-Options: DENY');
+header('X-XSS-Protection: 1; mode=block');
 
-    if (file_exists($file)) {
-        require $file;
-    }
-});
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    http_response_code(204);
+    exit;
+}
 
 use App\Core\{Database, Logger, ErrorHandler};
 
-// Debug current directory
-error_log("Current directory: " . __DIR__);
-error_log("Looking for .env in: " . __DIR__ . '/.env');
-
-
-
-
-// Initialize error handler
+// khỏi tạo error handler
 $errorHandler = new ErrorHandler();
 
-// Initialize logger
+// khởi tạo logger
 $logger = Logger::getInstance();
 
-// Initialize database connection
+// khởi  database connection
 try {
     $db = Database::getInstance();
 } catch (\Exception $e) {
