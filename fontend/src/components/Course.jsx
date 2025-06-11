@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import CourseBox from './elements/CourseBox';
 import teacherList from '../assets/teacherList.json';
+import course1 from '../assets/courses1.json';
 import CoursePopup from './CoursePopup';
 import '../assets/css/component.css';
 

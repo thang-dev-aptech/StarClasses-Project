@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "title": "Luyện thi Toán THPT Quốc gia",
+    "block": "Khối A",
+    "teacher": "Thầy Nguyễn Văn Minh",
+    "students": 245,
+    "duration": "6 tháng",
+    "rating": 4.9,
+    "experience": "12 năm kinh nghiệm"
+  },
+  {
+    "id": 2,
+    "title": "Luyện thi Ngữ văn THPT Quốc gia",
+    "block": "Khối C",
+    "teacher": "Cô Trần Thị Hoa",
+    "students": 198,
+    "duration": "6 tháng",
+    "rating": 4.8,
+    "experience": "15 năm kinh nghiệm"
+  },
+  {
+    "id": 3,
+    "title": "Luyện thi Tiếng Anh THPT Quốc gia",
+    "block": "Ngoại ngữ",
+    "teacher": "Thầy James Wilson",
+    "students": 312,
+    "duration": "6 tháng",
+    "rating": 4.9,
+    "experience": "8 năm kinh nghiệm"
+  }
+]

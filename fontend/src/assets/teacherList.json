@@ -1,5 +1,14 @@
 {
-    "subjects": ["All", "Mathematics", "Physics", "Chemistry", "Biology", "History", "Geography"],
+    "subjects": [
+        "All",
+        "Mathematics",
+        "Physics",
+        "Chemistry",
+        "Biology",
+        "History",
+        "Geography",
+        "English"
+    ],
     "teachers": [
         {
             "id": 1,
@@ -110,16 +119,20 @@
             "address": "468 Willow St, AreaVille",
             "education": "MA in Music Theory",
             "experience": "2 years"
-        }],
+        }
+    ],
     "courses": [
         {
             "id": 1,
-            "name": "Mathematics 101",
+            "name": "Basic Mathematics 10",
             "description": "An introduction to basic mathematical concepts.",
             "subject": "Mathematics",
             "image": "/image/course.webp",
             "duration": "3 months",
             "idTeacher": 1,
+            "imageTeacher": "/image/teacher1.webp",
+            "nameTeacher": "John Doe",
+            "experience": "10 years",
             "price": "$300",
             "rating": 4.5,
             "reviews": [
@@ -135,16 +148,54 @@
                     "review": "Good course, but could use more examples.",
                     "rating": 4
                 }
+            ],
+            "aim": [
+                "Understand basic grammar and vocabulary",
+                "Read and analyze simple texts",
+                "Write basic sentences and paragraphs"
+            ],
+            "schedule": [
+                "Monday, 10:00 AM to 11:30 AM",
+                "Tuesday, 2:00 PM to 3:30 PM"
+            ],
+            "documents": [
+                {
+                    "icon": "file-earmark-text",
+                    "bg": "primary",
+                    "title": "Sách giáo khoa và bài tập",
+                    "description": "Tài liệu chính thức từ Bộ Giáo dục"
+                },
+                {
+                    "icon": "book",
+                    "bg": "success",
+                    "title": "Tài liệu tổng hợp",
+                    "description": "Biên soạn bởi đội ngũ giáo viên Star Classes"
+                },
+                {
+                    "icon": "journal-bookmark",
+                    "bg": "purple",
+                    "title": "Đề thi thử và đáp án",
+                    "description": "Bộ đề thi thử mới nhất với đáp án chi tiết"
+                },
+                {
+                    "icon": "star",
+                    "bg": "warning",
+                    "title": "Tài liệu bổ trợ",
+                    "description": "Công thức, mẹo làm bài và tài liệu tham khảo"
+                }
             ]
         },
         {
             "id": 2,
-            "name": "Physics 101",
+            "name": "Basic Physics 10",
             "description": "Fundamentals of physics and its applications.",
             "subject": "Physics",
             "image": "/image/course.webp",
             "duration": "4 months",
             "idTeacher": 2,
+            "imageTeacher": "/image/teacher1.webp",
+            "nameTeacher": "John Doe",
+            "experience": "10 years",
             "price": "$400",
             "rating": 4.7,
             "reviews": [
@@ -160,16 +211,54 @@
                     "review": "Interesting content, but a bit fast-paced.",
                     "rating": 4
                 }
+            ],
+            "aim": [
+                "Understand basic grammar and vocabulary",
+                "Read and analyze simple texts",
+                "Write basic sentences and paragraphs"
+            ],
+            "schedule": [
+                "Monday, 10:00 AM to 11:30 AM",
+                "Tuesday, 2:00 PM to 3:30 PM"
+            ],
+            "documents": [
+                {
+                    "icon": "file-earmark-text",
+                    "bg": "primary",
+                    "title": "Sách giáo khoa và bài tập",
+                    "description": "Tài liệu chính thức từ Bộ Giáo dục"
+                },
+                {
+                    "icon": "book",
+                    "bg": "success",
+                    "title": "Tài liệu tổng hợp",
+                    "description": "Biên soạn bởi đội ngũ giáo viên Star Classes"
+                },
+                {
+                    "icon": "journal-bookmark",
+                    "bg": "purple",
+                    "title": "Đề thi thử và đáp án",
+                    "description": "Bộ đề thi thử mới nhất với đáp án chi tiết"
+                },
+                {
+                    "icon": "star",
+                    "bg": "warning",
+                    "title": "Tài liệu bổ trợ",
+                    "description": "Công thức, mẹo làm bài và tài liệu tham khảo"
+                }
             ]
         },
         {
             "id": 3,
-            "name": "Chemistry 101",
+            "name": "Basic Chemistry 10",
             "description": "Basic principles of chemistry and laboratory techniques.",
             "subject": "Chemistry",
             "image": "/image/course.webp",
             "duration": "3 months",
             "idTeacher": 3,
+            "imageTeacher": "/image/teacher1.webp",
+            "nameTeacher": "John Doe",
+            "experience": "10 years",
             "price": "$350",
             "rating": 4.6,
             "reviews": [
@@ -191,16 +280,54 @@
                     "review": "Very informative, but a bit challenging.",
                     "rating": 4
                 }
+            ],
+            "aim": [
+                "Understand basic grammar and vocabulary",
+                "Read and analyze simple texts",
+                "Write basic sentences and paragraphs"
+            ],
+            "schedule": [
+                "Monday, 10:00 AM to 11:30 AM",
+                "Tuesday, 2:00 PM to 3:30 PM"
+            ],
+            "documents": [
+                {
+                    "icon": "file-earmark-text",
+                    "bg": "primary",
+                    "title": "Sách giáo khoa và bài tập",
+                    "description": "Tài liệu chính thức từ Bộ Giáo dục"
+                },
+                {
+                    "icon": "book",
+                    "bg": "success",
+                    "title": "Tài liệu tổng hợp",
+                    "description": "Biên soạn bởi đội ngũ giáo viên Star Classes"
+                },
+                {
+                    "icon": "journal-bookmark",
+                    "bg": "purple",
+                    "title": "Đề thi thử và đáp án",
+                    "description": "Bộ đề thi thử mới nhất với đáp án chi tiết"
+                },
+                {
+                    "icon": "star",
+                    "bg": "warning",
+                    "title": "Tài liệu bổ trợ",
+                    "description": "Công thức, mẹo làm bài và tài liệu tham khảo"
+                }
             ]
         },
         {
             "id": 4,
-            "name": "Biology 101",
+            "name": "Basic Biology 10",
             "description": "Introduction to biological sciences.",
             "subject": "Biology",
             "image": "/image/course.webp",
             "duration": "4 months",
             "idTeacher": 4,
+            "imageTeacher": "/image/teacher1.webp",
+            "nameTeacher": "John Doe",
+            "experience": "10 years",
             "price": "$450",
             "rating": 4.8,
             "reviews": [
@@ -208,16 +335,55 @@
                     "id": 1,
                     "name": "Hannah",
                     "review": "Great course"
-                }]
+                }
+            ],
+            "aim": [
+                "Understand basic grammar and vocabulary",
+                "Read and analyze simple texts",
+                "Write basic sentences and paragraphs"
+            ],
+            "schedule": [
+                "Monday, 10:00 AM to 11:30 AM",
+                "Tuesday, 2:00 PM to 3:30 PM"
+            ],
+            "documents": [
+                {
+                    "icon": "file-earmark-text",
+                    "bg": "primary",
+                    "title": "Sách giáo khoa và bài tập",
+                    "description": "Tài liệu chính thức từ Bộ Giáo dục"
+                },
+                {
+                    "icon": "book",
+                    "bg": "success",
+                    "title": "Tài liệu tổng hợp",
+                    "description": "Biên soạn bởi đội ngũ giáo viên Star Classes"
+                },
+                {
+                    "icon": "journal-bookmark",
+                    "bg": "purple",
+                    "title": "Đề thi thử và đáp án",
+                    "description": "Bộ đề thi thử mới nhất với đáp án chi tiết"
+                },
+                {
+                    "icon": "star",
+                    "bg": "warning",
+                    "title": "Tài liệu bổ trợ",
+                    "description": "Công thức, mẹo làm bài và tài liệu tham khảo"
+                }
+            ]
         },
         {
             "id": 5,
-            "name": "History 101",
+            "name": "Basic History 10",
             "description": "Overview of world history from ancient to modern times.",
             "subject": "History",
             "image": "/image/course.webp",
             "duration": "5 months",
             "idTeacher": 5,
+            "imageTeacher": "/image/teacher1.webp",
+            "nameTeacher": "John Doe",
+            "experience": "10 years",
             "price": "$500",
             "rating": 4.9,
             "reviews": [
@@ -233,16 +399,54 @@
                     "review": "Interesting course, but a bit lengthy.",
                     "rating": 4
                 }
+            ],
+            "aim": [
+                "Understand basic grammar and vocabulary",
+                "Read and analyze simple texts",
+                "Write basic sentences and paragraphs"
+            ],
+            "schedule": [
+                "Monday, 10:00 AM to 11:30 AM",
+                "Tuesday, 2:00 PM to 3:30 PM"
+            ],
+            "documents": [
+                {
+                    "icon": "file-earmark-text",
+                    "bg": "primary",
+                    "title": "Sách giáo khoa và bài tập",
+                    "description": "Tài liệu chính thức từ Bộ Giáo dục"
+                },
+                {
+                    "icon": "book",
+                    "bg": "success",
+                    "title": "Tài liệu tổng hợp",
+                    "description": "Biên soạn bởi đội ngũ giáo viên Star Classes"
+                },
+                {
+                    "icon": "journal-bookmark",
+                    "bg": "purple",
+                    "title": "Đề thi thử và đáp án",
+                    "description": "Bộ đề thi thử mới nhất với đáp án chi tiết"
+                },
+                {
+                    "icon": "star",
+                    "bg": "warning",
+                    "title": "Tài liệu bổ trợ",
+                    "description": "Công thức, mẹo làm bài và tài liệu tham khảo"
+                }
             ]
         },
         {
             "id": 6,
-            "name": "Geography 101",
+            "name": "Basic Geography 10",
             "description": "Study of the Earth's landscapes, environments, and the relationships between people and their environments.",
             "subject": "Geography",
             "image": "/image/course.webp",
             "duration": "4 months",
             "idTeacher": 6,
+            "imageTeacher": "/image/teacher1.webp",
+            "nameTeacher": "John Doe",
+            "experience": "10 years",
             "price": "$400",
             "rating": 4.7,
             "reviews": [
@@ -258,6 +462,105 @@
                     "review": "Good course, but could use more real-world examples.",
                     "rating": 4
                 }
+            ],
+            "aim": [
+                "Understand basic grammar and vocabulary",
+                "Read and analyze simple texts",
+                "Write basic sentences and paragraphs"
+            ],
+            "schedule": [
+                "Monday, 10:00 AM to 11:30 AM",
+                "Tuesday, 2:00 PM to 3:30 PM"
+            ],
+            "documents": [
+                {
+                    "icon": "file-earmark-text",
+                    "bg": "primary",
+                    "title": "Sách giáo khoa và bài tập",
+                    "description": "Tài liệu chính thức từ Bộ Giáo dục"
+                },
+                {
+                    "icon": "book",
+                    "bg": "success",
+                    "title": "Tài liệu tổng hợp",
+                    "description": "Biên soạn bởi đội ngũ giáo viên Star Classes"
+                },
+                {
+                    "icon": "journal-bookmark",
+                    "bg": "purple",
+                    "title": "Đề thi thử và đáp án",
+                    "description": "Bộ đề thi thử mới nhất với đáp án chi tiết"
+                },
+                {
+                    "icon": "star",
+                    "bg": "warning",
+                    "title": "Tài liệu bổ trợ",
+                    "description": "Công thức, mẹo làm bài và tài liệu tham khảo"
+                }
             ]
-        }]
+        },
+        {
+            "id": 7,
+            "name": "Basic English 10",
+            "description": "Introduction to English language and literature.",
+            "subject": "English",
+            "image": "/image/course.webp",
+            "duration": "3 months",
+            "idTeacher": 7,
+            "imageTeacher": "/image/teacher1.webp",
+            "nameTeacher": "John Doe",
+            "experience": "10 years",
+            "price": "$350",
+            "rating": 4.5,
+            "reviews": [
+                {
+                    "id": 1,
+                    "name": "Ethan",
+                    "review": "Great course for beginners.",
+                    "rating": 5
+                },
+                {
+                    "id": 2,
+                    "name": "Fiona",
+                    "review": "Good content, but needs more practice exercises.",
+                    "rating": 4
+                }
+            ],
+            "aim": [
+                "Understand basic grammar and vocabulary",
+                "Read and analyze simple texts",
+                "Write basic sentences and paragraphs"
+            ],
+            "schedule": [
+                "Monday, 10:00 AM to 11:30 AM",
+                "Tuesday, 2:00 PM to 3:30 PM"
+            ],
+            "documents": [
+                {
+                    "icon": "file-earmark-text",
+                    "bg": "primary",
+                    "title": "Sách giáo khoa và bài tập",
+                    "description": "Tài liệu chính thức từ Bộ Giáo dục"
+                },
+                {
+                    "icon": "book",
+                    "bg": "success",
+                    "title": "Tài liệu tổng hợp",
+                    "description": "Biên soạn bởi đội ngũ giáo viên Star Classes"
+                },
+                {
+                    "icon": "journal-bookmark",
+                    "bg": "purple",
+                    "title": "Đề thi thử và đáp án",
+                    "description": "Bộ đề thi thử mới nhất với đáp án chi tiết"
+                },
+                {
+                    "icon": "star",
+                    "bg": "warning",
+                    "title": "Tài liệu bổ trợ",
+                    "description": "Công thức, mẹo làm bài và tài liệu tham khảo"
+                }
+            ]
+        }
+    ]
 }
