@@ -30,7 +30,7 @@ export default function CourseBox({ course, onChangModal }) {
         //     </div>
 
         // </div>
-        <Card className="course-card h-100 shadow-sm border-0 rounded overflow-hidden">
+        <Card className="course-card h-100 shadow border rounded overflow-hidden mb-2">
             <div className="bg-light d-flex align-items-center justify-content-center">
                 <i >
                     <img

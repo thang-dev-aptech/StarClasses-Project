@@ -21,6 +21,11 @@ a{
     color: inherit;
 }
 
+.form-select:focus {
+  border-color: transparent !important; /* hoặc màu khác nếu muốn */
+  box-shadow: none !important;
+}
+
 /* MenuBar */
 @keyframes pulse {
   0% { transform: scale(1); }
