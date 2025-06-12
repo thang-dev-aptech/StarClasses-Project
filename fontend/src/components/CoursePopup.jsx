@@ -139,8 +139,17 @@ function CoursePopup({ show, onHide, course }) {
         </Tab.Container>
       </Modal.Body>
       <Modal.Footer className="justify-content-center">
-        <button className=" w-50 text-dark nav-tab-hover ">
-          <a href="#contact">Liên hệ tư vấn</a>
+        <button className=" w-50 text-dark nav-tab-hover "
+          onClick={() => {
+            onHide();
+            setTimeout(() => {
+              const contactSection = document.getElementById("contact");
+              if (contactSection) {
+                contactSection.scrollIntoView({ behavior: "smooth" });
+              }
+            }, 300); // đợi modal đóng
+          }}>
+          Liên hệ tư vấn
         </button>
       </Modal.Footer>
     </Modal>

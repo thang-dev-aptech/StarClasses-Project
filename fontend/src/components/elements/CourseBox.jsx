@@ -1,5 +1,6 @@
 import { Star } from 'lucide-react';
 import { Card, Badge, Button } from "react-bootstrap";
+import "../../assets/css/CourseBox.css";
 
 
 export default function CourseBox({ course, onChangModal }) {
@@ -29,7 +30,7 @@ export default function CourseBox({ course, onChangModal }) {
         //     </div>
 
         // </div>
-        <Card className="h-100 shadow-sm border-0 rounded overflow-hidden">
+        <Card className="course-card h-100 shadow-sm border-0 rounded overflow-hidden">
             <div className="bg-light d-flex align-items-center justify-content-center">
                 <i >
                     <img
@@ -60,7 +61,7 @@ export default function CourseBox({ course, onChangModal }) {
                     </div>
                 </div> */}
                 <Card.Title className="h6">{course.name}</Card.Title>
-                <Card.Text className="mb-2 small text-start h-25">{course.description}</Card.Text>
+                <Card.Text className="mb-2 small text-start" style={{height: "60px"}}>{course.description}</Card.Text>
                 <div className="d-flex align-items-center mb-3">
                     <img
                         src={course.imageTeacher} // hoặc đường dẫn ảnh cố định, ví dụ: "/path/to/avatar.jpg"

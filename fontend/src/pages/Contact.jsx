@@ -1,7 +1,7 @@
 import "../assets/css/contact.css";
 import { useState } from "react";
 import { ButtonCustom } from "../components/ButtonCustom";
-export const Contact = () => {
+const Contact = () => {
   const [formData, setFormData] = useState({
     first_name: "",
     last_name: "",
@@ -257,3 +257,5 @@ export const Contact = () => {
     </>
   );
 };
+
+export default Contact;

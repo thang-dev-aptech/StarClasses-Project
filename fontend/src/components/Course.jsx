@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import CourseBox from './elements/CourseBox';
+import CourseSlider from './elements/CourseSlider';
 import teacherList from '../assets/teacherList.json';
-import course1 from '../assets/courses1.json';
 import CoursePopup from './CoursePopup';
 import '../assets/css/component.css';
 
@@ -37,11 +37,12 @@ export default function Course() {
                     </ul>
                 </div>
                 <div className="row align-items-stretch mx-2">
-                    {filteredCourses.map((course) => (
+                    <CourseSlider courses={filteredCourses} onChangModal={setSelectedID} />
+                    {/* {filteredCourses.map((course) => (
                         <div key={course.id} className="col-12 col-md-6 col-lg-4 mb-4">
                             <CourseBox course={course} onChangModal={setSelectedID}/>
                         </div>
-                    ))}
+                    ))} */}
                 </div>
 
             </div>

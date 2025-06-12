@@ -1,6 +1,9 @@
+import "../../assets/css/CourseBox.css";
+
+
 export default function TeacherBox({ teacher }) {
     return (
-        <div className="p-4 border rounded shadow text-start h-100">
+        <div className=" course-card p-4 border rounded shadow text-start h-100">
             <div className="d-flex text-center justify-content-center mb-3">
                 <img
                     src={teacher.image}

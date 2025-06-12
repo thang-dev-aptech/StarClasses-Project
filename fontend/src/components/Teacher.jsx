@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import TeacherBox from './elements/TeacherBox';
 import teacherList from '../assets/teacherList.json';
+import TeacherSlider from './elements/TeacherSlider';
 import '../assets/css/component.css';
 
 export default function Teacher() {
@@ -30,11 +31,12 @@ export default function Teacher() {
                     </ul>
                 </div>
                 <div className="row align-items-stretch mx-2">
-                    {filteredTeachers.map((teacher) => (
+                    <TeacherSlider teachers={filteredTeachers} />
+                    {/* {filteredTeachers.map((teacher) => (
                         <div key={teacher.id} className="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
                             <TeacherBox teacher={teacher} />
                         </div>
-                    ))}
+                    ))} */}
                 </div>
 
             </div>
