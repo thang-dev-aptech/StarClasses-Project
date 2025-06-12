@@ -26,7 +26,7 @@ export default function Course() {
     const selectedCourse = teacherList.courses.find(course => course.id === selectedID);
 
     return (
-        <div className="text-center pt-5" id='course'>
+        <div className="text-center pt-5 my-5" id='course'>
             <h1 className="fw-bold display-5 text-capitalize">Our Classes</h1>
             <p className="text-secondary fs-5">Explore our wide range of courses designed to help you excel in your academic journey.</p>
             <div className="row mx-5">

@@ -12,7 +12,7 @@ export default function Teacher() {
     );
 
     return (
-        <div className="text-center pt-5" id='teacher'>
+        <div className="text-center pt-5 my-5" id='teacher'>
             <h1 className="fw-bold display-5 text-capitalize">Meet our expert teachers</h1>
             <p className="text-secondary fs-5">Our team of highly qualified educator are dedicated to helping you succeed</p>
             <div className="row mx-5">
