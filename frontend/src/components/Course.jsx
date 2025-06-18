@@ -40,14 +40,26 @@ export default function Course() {
             },
             aim: Array.isArray(c.learning_outcomes)
               ? c.learning_outcomes
-              : (typeof c.learning_outcomes === 'string' && c.learning_outcomes
-                  ? c.learning_outcomes.split(';')
-                  : []),
-            schedule: Array.isArray(c.schedule)
-              ? c.schedule
-              : (typeof c.schedule === 'string' && c.schedule
-                  ? c.schedule.split(';')
-                  : []),
+              : (c.learning_outcomes && Array.isArray(c.learning_outcomes.outcomes)
+                  ? c.learning_outcomes.outcomes
+                  : (typeof c.learning_outcomes === 'string' && c.learning_outcomes
+                      ? c.learning_outcomes.split(';')
+                      : [])),
+            schedule: (() => {
+              // Trường schedule có thể là array, object hoặc chuỗi
+              if (Array.isArray(c.schedule)) return c.schedule;
+              if (c.schedule && typeof c.schedule === 'object' && c.schedule.schedule) {
+                const s = c.schedule.schedule;
+                // Gộp "day" và "time" thành 1 dòng hiển thị đẹp
+                const day = s.day || '';
+                const time = s.time || '';
+                return [`${day}${day && time ? ' | ' : ''}${time}`.trim()];
+              }
+              if (typeof c.schedule === 'string' && c.schedule) {
+                return c.schedule.split(';');
+              }
+              return [];
+            })(),
             // Thêm dữ liệu tài liệu mẫu cho popup
             documents: [
               { title: 'Tổng hợp đề thi', description: 'Đề thi thử các năm', icon: 'file-earmark-text', bg: 'primary' },

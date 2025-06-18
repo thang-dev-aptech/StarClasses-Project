@@ -4,7 +4,9 @@ import { Container, Nav, Navbar, Button } from "react-bootstrap";
 import '../assets/css/component.css';
 import logo from '../assets/images/image.png';
 
+
 function MenuBar() {
+  
   // Scroll đến phần contact
   const handleScrollToContact = () => {
     const contactSection = document.getElementById('contact');
