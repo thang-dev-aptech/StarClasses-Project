@@ -104,12 +104,12 @@ export default function TeachersListPage() {
 
   // delete teacher
   const handleDelete = async (id) => {
-    if (!window.confirm('Bạn có chắc chắn muốn xoá giáo viên này?')) return;
+    if (!window.confirm('Are you sure you want to delete this teacher?')) return;
     try {
       await teacherService.deleteTeacher(id);
       setTeachers(prevTeachers => prevTeachers.filter(teacher => teacher.id !== id));
     } catch (error) {
-      alert('Xoá giáo viên thất bại!');
+      alert('Failed to delete teacher!');
       console.error('Delete error:', error);
     }
   };
@@ -159,10 +159,10 @@ export default function TeachersListPage() {
               value={pendingSearchCategory}
               onChange={e => setPendingSearchCategory(e.target.value)}
             >
-              <option value="all">Tất cả</option>
-              <option value="Tự Nhiên">Tự Nhiên</option>
-              <option value="Xã Hội">Xã Hội</option>
-              <option value="Ngoại Ngữ">Ngoại Ngữ</option>
+              <option value="all">All</option>
+              <option value="Science">Science</option>
+              <option value="Social">Social</option>
+              <option value="Languages">Languages</option>
             </select>
             <button className="btn btn-outline-primary" type="submit">
               <i className="bi bi-search me-1"></i>

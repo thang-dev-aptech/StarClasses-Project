@@ -63,10 +63,10 @@ export default function Introduction() {
           <p className="text-muted fs-5 mb-5" style={{fontSize: '1.15rem', color: '#6c6e74'}}>{intro.description}</p>
           <div className="d-flex gap-3 justify-content-center justify-content-lg-start mb-4">
             <button className="btn btn-warning text-dark fw-semibold px-4 py-3 btn-hover-shadow rounded-3" style={{fontSize: '1.1rem', minWidth: 170}}>
-              Đăng ký học thử
+              Register for trial
             </button>
             <button className="btn btn-outline-secondary fw-semibold px-4 py-3 btn-hover-shadow rounded-3" style={{fontSize: '1.1rem', minWidth: 170}}>
-              Tìm hiểu thêm
+              Learn more
             </button>
           </div>
           <div className="d-flex align-items-center gap-3 mb-2 justify-content-center justify-content-lg-start">
@@ -78,7 +78,7 @@ export default function Introduction() {
               <span style={{width:12, height:12, borderRadius:'50%', background:'#E0E0E0', display:'inline-block'}}></span>
             </div>
             <span className="text-muted ms-3" style={{fontSize:'1rem'}}>
-              Đã có <span className="fw-bold">8,500+</span> học sinh tin tưởng
+              Trusted by <span className="fw-bold">8,500+</span> students
             </span>
           </div>
         </div>

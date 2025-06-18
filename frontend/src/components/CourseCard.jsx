@@ -29,7 +29,7 @@ export default function CourseCard({ course, onChangModal }) {
                     />
                     <div>
                         <div className="fw-semibold">{course.teacher.name}</div>
-                        <div className="text-muted small">{course.teacher.experience} năm kinh nghiệm</div>
+                        <div className="text-muted small">{course.teacher.experience}</div>
                     </div>
                 </div>
                 {/* Tags */}
@@ -56,7 +56,7 @@ export default function CourseCard({ course, onChangModal }) {
                       }}
                       onClick={() => onChangModal && onChangModal(course.id)}
                   >
-                      Xem chi tiết khóa học
+                      View course details
                   </Button>
                 </div>
             </Card.Body>

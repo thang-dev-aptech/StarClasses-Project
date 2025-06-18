@@ -3,19 +3,19 @@ import { Container, Row, Col, Card } from 'react-bootstrap';
 
 function Achievements() {
   const stats = [
-    { number: '95%', label: 'Tỷ lệ đỗ đại học' },
-    { number: '8,500+', label: 'Học sinh đã học' },
-    { number: '50+', label: 'Giáo viên chuyên môn' },
-    { number: '25+', label: 'Giải thưởng đạt được' },
+    { number: '95%', label: 'University admission rate' },
+    { number: '8,500+', label: 'Students enrolled' },
+    { number: '50+', label: 'Expert teachers' },
+    { number: '25+', label: 'Awards achieved' },
   ];
 
   return (
     <div className="pt-2" id='achievements'>
       <div className="py-5" style={{ backgroundColor: '#fffcdc' }}>
         <Container className="text-center">
-          <h2 className="fw-bold display-5">Thành tích nổi bật</h2>
+          <h2 className="fw-bold display-5">Our Achievements</h2>
           <p className="text-muted mb-5">
-            Chúng tôi tự hào về thành tích và sự thành công của học sinh Star Classes.
+            We are proud of the accomplishments and success of Star Classes students.
           </p>
 
           <Row className="g-4 justify-content-center">

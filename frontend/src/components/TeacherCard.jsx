@@ -58,10 +58,10 @@ export default function TeacherCard({ teacher, minHeight = 420 }) {
         <div className="fw-bold" style={{ fontSize: 20, lineHeight: 1.2 }}>{teacher.full_name || teacher.name}</div>
         <div className="text-secondary mb-2" style={{ fontSize: 15 }}>{teacher.subject}</div>
         <div className="mb-1" style={{ fontSize: 15 }}>
-          <span className="fw-bold">Kinh nghiệm:</span> <span>{teacher.experience_years || teacher.experience} năm</span>
+          <span className="fw-bold">Experience:</span> <span>{teacher.experience_years || teacher.experience} years</span>
         </div>
         <div className="mb-1" style={{ fontSize: 15 }}>
-          <span className="fw-bold">Học vấn:</span> <span>{teacher.education}</span>
+          <span className="fw-bold">Education:</span> <span>{teacher.education}</span>
         </div>
         {teacher.achievements && (
           <div className="mt-auto" style={{ color: '#22c55e', fontSize: 15 }}>

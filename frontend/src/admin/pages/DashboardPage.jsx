@@ -55,7 +55,7 @@ const DashboardPage = () => {
           <StatCard title="Total Teachers" value={dashboardData.totalTeachers || 0} icon="person-video3" color="success" />
         </div>
         <div className="col-md-4">
-          <StatCard title="New Contacts" value={dashboardData.totalContacts || 0} icon="chat-square-text" color="warning" />
+          <StatCard title="Total Contacts" value={dashboardData.totalContacts || 0} icon="chat-square-text" color="warning" />
         </div>
       </div>
       <div className="row g-3 dashboard-latest-row">
@@ -70,14 +70,17 @@ const DashboardPage = () => {
                 {dashboardData.latestCourses && dashboardData.latestCourses.length > 0 ? (
                   dashboardData.latestCourses.map((course, idx) => {
                     const isActive = course.is_active;
-                    const statusLabel = isActive ? 'Đang diễn ra' : 'Đã kết thúc';
+                    const statusLabel = isActive ? 'Ongoing' : 'Completed';
                     const badgeColor = isActive ? 'success' : 'secondary';
                     return (
                       <div className="list-group-item d-flex align-items-center justify-content-between py-3" key={course.id || idx}>
                         <div className="text-truncate" style={{maxWidth: '60%'}}>
                           <strong title={course.course_name}>{course.course_name}</strong>
-                          <div className="small text-muted text-truncate" title={course.teacher_name || 'Chưa rõ'}>
-                            GV: {course.teacher_name || 'Chưa rõ'}
+                          <div className="small text-muted text-truncate" title={course.category || ''}>
+                            Category: {course.category || 'N/A'}
+                          </div>
+                          <div className="small text-muted text-truncate" title={course.teacher_name || 'Unknown'}>
+                            Teacher: {course.teacher_name || 'Unknown'}
                           </div>
                         </div>
                         <span className={`badge rounded-pill bg-${badgeColor}`}>{statusLabel}</span>
@@ -85,7 +88,7 @@ const DashboardPage = () => {
                     );
                   })
                 ) : (
-                  <div className="list-group-item text-muted text-center py-3">Chưa có khóa học nào gần đây.</div>
+                  <div className="list-group-item text-muted text-center py-3">No recent courses.</div>
                 )}
               </div>
             </div>
@@ -102,7 +105,7 @@ const DashboardPage = () => {
                 {dashboardData.latestTeachers && dashboardData.latestTeachers.length > 0 ? (
                   dashboardData.latestTeachers.map((teacher, idx) => {
                     const isActive = teacher.is_active;
-                    const statusLabel = isActive ? 'Đang dạy' : 'Nghỉ dạy';
+                    const statusLabel = isActive ? 'Active' : 'Inactive';
                     const badgeColor = isActive ? 'success' : 'secondary';
                     return (
                       <div className="list-group-item d-flex align-items-center justify-content-between py-3" key={teacher.id || idx}>
@@ -115,7 +118,7 @@ const DashboardPage = () => {
                     );
                   })
                 ) : (
-                  <div className="list-group-item text-muted text-center py-3">Chưa có giáo viên nào gần đây.</div>
+                  <div className="list-group-item text-muted text-center py-3">No recent teachers.</div>
                 )}
               </div>
             </div>
@@ -144,7 +147,7 @@ const DashboardPage = () => {
                     </div>
                   ))
                 ) : (
-                  <div className="list-group-item text-muted text-center py-3">Chưa có liên hệ nào gần đây.</div>
+                  <div className="list-group-item text-muted text-center py-3">No recent contacts.</div>
                 )}
               </div>
             </div>

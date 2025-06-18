@@ -70,18 +70,18 @@ const ContactListPage = () => {
     <section className="p-4 main-content">
       <div className="d-flex justify-content-between align-items-center mb-4">
         <div className="d-flex align-items-center gap-3">
-          <label className="mb-0">Lọc theo trạng thái:</label>
+          <label className="mb-0">Filter by status:</label>
           <select 
             className="form-select" 
             style={{width: '200px'}}
             value={selectedStatus}
             onChange={(e) => setSelectedStatus(e.target.value)}
           >
-            <option value="all">Tất cả</option>
-            <option value="pending">Chưa xử lý</option>
-            <option value="processing">Đang xử lý</option>
-            <option value="completed">Đã xử lý</option>
-            <option value="rejected">Từ chối</option>
+            <option value="all">All</option>
+            <option value="pending">Pending</option>
+            <option value="processing">Processing</option>
+            <option value="completed">Completed</option>
+            <option value="rejected">Rejected</option>
           </select>
         </div>
       </div>
@@ -121,10 +121,10 @@ const ContactListPage = () => {
                         onChange={(e) => handleStatusChange(contact.id, e.target.value)}
                         disabled={updatingId === contact.id}
                       >
-                        <option value="pending">Chưa xử lý</option>
-                        <option value="processing">Đang xử lý</option>
-                        <option value="completed">Đã xử lý</option>
-                        <option value="rejected">Từ chối</option>
+                        <option value="pending">Pending</option>
+                        <option value="processing">Processing</option>
+                        <option value="completed">Completed</option>
+                        <option value="rejected">Rejected</option>
                       </select>
                     </td>
                   </tr>

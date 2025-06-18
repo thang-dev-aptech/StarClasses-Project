@@ -61,7 +61,7 @@ export default function Teacher() {
                 setLoading(false);
             })
             .catch(() => {
-                setError('Lỗi tải dữ liệu giáo viên');
+                setError('Failed to load teachers');
                 setLoading(false);
             });
     }, []);
@@ -84,16 +84,16 @@ export default function Teacher() {
 
     return (
         <div className="container text-center pt-5 my-5" id='teacher'>
-            <h1 className="fw-bold display-5 text-capitalize">Đội ngũ giáo viên</h1>
-            <p className="text-secondary fs-5">Đội ngũ giáo viên có trình độ cao của chúng tôi luôn tận tâm giúp bạn thành công</p>
+            <h1 className="fw-bold display-5 text-capitalize">Our Teachers</h1>
+            <p className="text-secondary fs-5">Our highly qualified teachers are dedicated to your success</p>
             <div className="row mx-5">
                 <div className="mx-2">
                     {loading ? (
-                        <div className="col-12 text-center py-5">Đang tải dữ liệu...</div>
+                        <div className="col-12 text-center py-5">Loading data...</div>
                     ) : error ? (
                         <div className="col-12 text-center text-danger py-5">{error}</div>
                     ) : teachers.length === 0 ? (
-                        <div className="col-12 text-center text-gray-400 py-5">Không tìm thấy giáo viên phù hợp</div>
+                        <div className="col-12 text-center text-gray-400 py-5">No suitable teacher found</div>
                     ) : (
                         <Slider {...settings}>
                             {teachers

@@ -83,21 +83,21 @@ function CoursePopup({ show, onHide, course }) {
               eventKey="overview"
               className={activeKey === 'overview' ? 'bg-white border border-bottom-0 rounded-top-3 fw-bold' : 'bg-light text-secondary'}
               style={{ minWidth: 120, textAlign: 'center', fontWeight: 600, fontSize: 16, borderColor: activeKey === 'overview' ? '#e5e7eb' : 'transparent' }}
-            >Tổng quan</Nav.Link>
+            >Overview</Nav.Link>
           </Nav.Item>
           <Nav.Item>
             <Nav.Link
               eventKey="curriculum"
               className={activeKey === 'curriculum' ? 'bg-white border border-bottom-0 rounded-top-3 fw-bold' : 'bg-light text-secondary'}
               style={{ minWidth: 120, textAlign: 'center', fontWeight: 600, fontSize: 16, borderColor: activeKey === 'curriculum' ? '#e5e7eb' : 'transparent' }}
-            >Tài liệu</Nav.Link>
+            >Materials</Nav.Link>
           </Nav.Item>
           <Nav.Item>
             <Nav.Link
               eventKey="teacher"
               className={activeKey === 'teacher' ? 'bg-white border border-bottom-0 rounded-top-3 fw-bold' : 'bg-light text-secondary'}
               style={{ minWidth: 120, textAlign: 'center', fontWeight: 600, fontSize: 16, borderColor: activeKey === 'teacher' ? '#e5e7eb' : 'transparent' }}
-            >Giáo viên</Nav.Link>
+            >Teacher</Nav.Link>
           </Nav.Item>
         </Nav>
       </div>
@@ -111,7 +111,7 @@ function CoursePopup({ show, onHide, course }) {
                   {course.description}
                 </div>
                 {/* Nội dung học tập */}
-                <div className="fw-bold mb-2" style={{ fontSize: 17 }}>Nội dung học tập</div>
+                <div className="fw-bold mb-2" style={{ fontSize: 17 }}>Learning outcomes</div>
                 <div className="row mb-3">
                   {(course.aim || []).map((item, idx) => (
                     <div className="col-12 col-md-6 mb-2 d-flex align-items-start" key={idx}>
@@ -121,7 +121,7 @@ function CoursePopup({ show, onHide, course }) {
                   ))}
                 </div>
                 {/* Lịch học */}
-                <div className="fw-bold mb-2" style={{ fontSize: 17 }}>Lịch học</div>
+                <div className="fw-bold mb-2" style={{ fontSize: 17 }}>Schedule</div>
                 <div>
                   {(course.schedule || []).map((item, idx) => (
                     <div className="mb-1 d-flex align-items-center" key={idx}>
@@ -133,7 +133,7 @@ function CoursePopup({ show, onHide, course }) {
                 {/* Giá tiền */}
                 {course.price && (
                   <div className="fw-bold mt-3 mb-2" style={{ color: '#0d2144', fontSize: 20 }}>
-                    Học phí:&nbsp;
+                    Tuition fee:&nbsp;
                     {course.price.toLocaleString('vi-VN')}<span style={{fontSize:16}}>đ</span>
                   </div>
                 )}
@@ -155,7 +155,7 @@ function CoursePopup({ show, onHide, course }) {
                     </div>
                     <div>
                       <div className="fw-bold fs-5">{course.nameTeacher}</div>
-                      <div className="text-muted mb-1">{course.experience} kinh nghiệm</div>
+                      <div className="text-muted mb-1">{course.experience}</div>
                     </div>
                   </div>
                 </div>
@@ -197,7 +197,7 @@ function CoursePopup({ show, onHide, course }) {
               }
             }, 300);
           }}>
-          Liên hệ tư vấn
+          Contact for advice
         </button>
       </Modal.Footer>
     </Modal>

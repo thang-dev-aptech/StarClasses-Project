@@ -118,12 +118,12 @@ function CoursesListPage() {
 
     // delete course
     const handleDelete = async (id) => {
-        if (!window.confirm('Bạn có chắc chắn muốn xoá khoá học này?')) return;
+        if (!window.confirm('Are you sure you want to delete this course?')) return;
         try {
             await courseService.deleteCourse(id);
             setCourses(prevCourses => prevCourses.filter(course => course.id !== id));
         } catch (error) {
-            alert('Xoá khoá học thất bại!');
+            alert('Failed to delete course!');
             console.error('Delete error:', error);
         }
     };
@@ -170,10 +170,10 @@ function CoursesListPage() {
                             value={pendingSearchCategory}
                             onChange={e => setPendingSearchCategory(e.target.value)}
                         >
-                            <option value="all">Tất cả</option>
-                            <option value="Tự Nhiên">Tự Nhiên</option>
-                            <option value="Xã Hội">Xã Hội</option>
-                            <option value="Ngoại Ngữ">Ngoại Ngữ</option>
+                            <option value="all">All</option>
+                            <option value="Science">Science</option>
+                            <option value="Social">Social</option>
+                            <option value="Languages">Languages</option>
                         </select>
                         <button className="btn btn-outline-primary" type="submit">
                             <i className="bi bi-search me-1"></i>

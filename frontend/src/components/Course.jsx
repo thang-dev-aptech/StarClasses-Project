@@ -5,7 +5,7 @@ import { Search } from 'lucide-react';
 import "../App.css";
 import { getCourses } from '../services/courseService';
 import { getTeachers } from '../services/teacherService';
-const categories = ["Tất cả", "Tự nhiên", "Xã hội", "Ngoại ngữ"];
+const categories = ["All", "Science", "Social", "Languages"];
 
 export default function Course() {
   const [selectedCategory, setSelectedCategory] = useState(0);
@@ -67,7 +67,7 @@ export default function Course() {
             ],
             imageTeacher: teacher.avatar_url,
             nameTeacher: teacher.full_name,
-            experience: teacher.experience_years + ' năm kinh nghiệm',
+            experience: teacher.experience_years + ' years experience',
           };
         });
         setCourses(mapped);
@@ -103,7 +103,7 @@ export default function Course() {
               lineHeight: 1.15,
             }}
           >
-            Khóa học luyện thi THPT Quốc gia
+            National High-School Exam Prep Courses
           </h2>
           <p
             className="text-center mx-auto"
@@ -114,7 +114,7 @@ export default function Course() {
               fontWeight: 500,
             }}
           >
-            Chọn khóa học phù hợp với mục tiêu của bạn. Tất cả khóa học đều có cam kết chất lượng và tỷ lệ đỗ cao.
+            Choose a course that fits your goal. All courses come with guaranteed quality and high pass rates.
           </p>
         </div>
         
@@ -161,7 +161,7 @@ export default function Course() {
           <div className="position-relative" style={{ minWidth: 200, maxWidth: 260, width: '100%' }}>
             <input
               type="text"
-              placeholder="Tìm kiếm theo tên môn học..."
+              placeholder="Search by subject name..."
               className="form-control ps-5 py-1"
               style={{
                 borderRadius: 10,
@@ -184,11 +184,11 @@ export default function Course() {
         {/* Grid các khóa học */}
         <div className="row g-4">
           {loading ? (
-            <div className="col-12 text-center py-10">Đang tải dữ liệu...</div>
+            <div className="col-12 text-center py-10">Loading data...</div>
           ) : error ? (
             <div className="col-12 text-center text-danger py-10">{error}</div>
           ) : filteredCourses.length === 0 ? (
-            <div className="col-12 text-center text-gray-400 py-10">Không tìm thấy khóa học phù hợp</div>
+            <div className="col-12 text-center text-gray-400 py-10">No suitable course found</div>
           ) : (
             filteredCourses.map(course => (
               <div className="col-12 col-md-6 col-lg-4" key={course.id}>

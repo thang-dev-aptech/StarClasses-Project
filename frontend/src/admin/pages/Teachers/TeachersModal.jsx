@@ -78,19 +78,19 @@ function TeachersModal({ show, onHide, teacher, onSuccess }) {
         const newErrors = {};
         
         if (!formData.full_name?.trim()) {
-            newErrors.full_name = 'Họ tên là bắt buộc';
+            newErrors.full_name = 'Full name is required';
         }
 
         if (!formData.subject) {
-            newErrors.subject = 'Môn học là bắt buộc';
+            newErrors.subject = 'Subject is required';
         }
 
         if (!formData.experience_years) {
-            newErrors.experience_years = 'Kinh nghiệm là bắt buộc';
+            newErrors.experience_years = 'Experience is required';
         }
 
         if (!formData.education?.trim()) {
-            newErrors.education = 'Học vấn là bắt buộc';
+            newErrors.education = 'Education is required';
         }
 
         setErrors(newErrors);
@@ -120,7 +120,7 @@ function TeachersModal({ show, onHide, teacher, onSuccess }) {
             if (file.size > 2 * 1024 * 1024) {
                 setErrors(prev => ({
                     ...prev,
-                    avatar_url: 'Kích thước ảnh không được vượt quá 2MB'
+                    avatar_url: 'Image size must not exceed 2MB'
                 }));
                 return;
             }

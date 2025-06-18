@@ -5,7 +5,7 @@ import { courseService } from '@/admin/services/courseService';
 // Khởi tạo form mặc định
 const initialFormState = {
     course_name: '',
-    category: 'Tự Nhiên',
+    category: 'Science',
     price: '',
     description: '',
     overview: '',
@@ -18,8 +18,9 @@ const initialFormState = {
 };
 
 const CATEGORIES = [
-    { value: 'Tự Nhiên', label: 'Tự Nhiên' },
-    { value: 'Xã Hội', label: 'Xã Hội' }
+    { value: 'Science', label: 'Science' },
+    { value: 'Social', label: 'Social' },
+    { value: 'Languages', label: 'Languages' }
 ];
 
 function CoursesModal({ show, onHide, course, onSuccess, teachers = [] }) {
@@ -66,29 +67,29 @@ function CoursesModal({ show, onHide, course, onSuccess, teachers = [] }) {
         const newErrors = {};
         
         if (!formData.course_name?.trim()) {
-            newErrors.course_name = 'Tên khóa học là bắt buộc';
+            newErrors.course_name = 'Course name is required';
         } else if (formData.course_name.length < 2) {
-            newErrors.course_name = 'Tên khóa học phải có ít nhất 2 ký tự';
+            newErrors.course_name = 'Course name must be at least 2 characters';
         }
 
         if (!formData.category) {
-            newErrors.category = 'Danh mục là bắt buộc';
+            newErrors.category = 'Category is required';
         }
 
         if (!formData.price) {
-            newErrors.price = 'Giá là bắt buộc';
+            newErrors.price = 'Price is required';
         } else if (isNaN(formData.price) || Number(formData.price) < 0) {
-            newErrors.price = 'Giá phải là số dương';
+            newErrors.price = 'Price must be a positive number';
         }
 
         if (!formData.teacher_id) {
-            newErrors.teacher_id = 'ID giáo viên là bắt buộc';
+            newErrors.teacher_id = 'Teacher is required';
         }
 
         if (!formData.description?.trim()) {
-            newErrors.description = 'Mô tả là bắt buộc';
+            newErrors.description = 'Description is required';
         } else if (formData.description.length < 10) {
-            newErrors.description = 'Mô tả phải có ít nhất 10 ký tự';
+            newErrors.description = 'Description must be at least 10 characters';
         }
 
         setErrors(newErrors);
@@ -118,7 +119,7 @@ function CoursesModal({ show, onHide, course, onSuccess, teachers = [] }) {
             if (file.size > 2 * 1024 * 1024) {
                 setErrors(prev => ({
                     ...prev,
-                    image: 'Kích thước ảnh không được vượt quá 2MB'
+                    image: 'Image size must not exceed 2MB'
                 }));
                 return;
             }
@@ -276,7 +277,7 @@ function CoursesModal({ show, onHide, course, onSuccess, teachers = [] }) {
                                                 onChange={handleChange}
                                                 isInvalid={!!errors.teacher_id}
                                             >
-                                                <option value="">Chọn giáo viên</option>
+                                                <option value="">Select teacher</option>
                                                 {teachers.map(teacher => (
                                                     <option key={teacher.id} value={teacher.id}>
                                                         {teacher.full_name}
@@ -331,10 +332,10 @@ function CoursesModal({ show, onHide, course, onSuccess, teachers = [] }) {
                                                 name="schedule_day"
                                                 value={formData.schedule_day}
                                                 onChange={handleChange}
-                                                placeholder="Ví dụ: Thứ 2,4,6"
+                                                placeholder="Example: Mon, Wed, Fri"
                                             />
                                             <Form.Text className="text-muted">
-                                                Các ngày học, ví dụ: Thứ 2,4,6
+                                                Days of the week, e.g., Mon, Wed, Fri
                                             </Form.Text>
                                         </Form.Group>
                                     </Col>
@@ -346,10 +347,10 @@ function CoursesModal({ show, onHide, course, onSuccess, teachers = [] }) {
                                                 name="schedule_time"
                                                 value={formData.schedule_time}
                                                 onChange={handleChange}
-                                                placeholder="Ví dụ: 18:00-20:00"
+                                                placeholder="Example: 18:00-20:00"
                                             />
                                             <Form.Text className="text-muted">
-                                                Thời gian học, ví dụ: 18:00-20:00
+                                                Study time, e.g., 18:00-20:00
                                             </Form.Text>
                                         </Form.Group>
                                     </Col>
@@ -365,10 +366,10 @@ function CoursesModal({ show, onHide, course, onSuccess, teachers = [] }) {
                                         name="learning_outcomes"
                                         value={formData.learning_outcomes}
                                         onChange={handleChange}
-                                        placeholder="Mỗi dòng một kết quả học tập&#10;Ví dụ:&#10;Hiểu được kiến thức cơ bản&#10;Áp dụng được vào thực tế"
+                                        placeholder="Each line an outcome&#10;E.g.:&#10;Understand basic concepts&#10;Apply to real life"
                                     />
                                     <Form.Text className="text-muted">
-                                        Mỗi dòng một kết quả học tập
+                                        One outcome per line
                                     </Form.Text>
                                 </Form.Group>
                             </div>

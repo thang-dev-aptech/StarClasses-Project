@@ -25,11 +25,11 @@ function MenuBar() {
 
         {/* Menu căn giữa */}
         <Nav className="mx-auto fw-semibold" style={{fontSize: '0.875rem', flex: 1, justifyContent: 'center'}}>
-          <Nav.Link href="#introduction" className="text-dark px-3 hover-link">Trang chủ</Nav.Link>
-          <Nav.Link href="#course" className="text-dark px-3 hover-link">Khóa học</Nav.Link>
-          <Nav.Link href="#teacher" className="text-dark px-3 hover-link">Giáo viên</Nav.Link>
-          <Nav.Link href="#achievements" className="text-dark px-3 hover-link">Thành tích</Nav.Link>
-          <Nav.Link href="#contact" className="text-dark px-3 hover-link">Liên hệ</Nav.Link>
+          <Nav.Link href="#introduction" className="text-dark px-3 hover-link">Home</Nav.Link>
+          <Nav.Link href="#course" className="text-dark px-3 hover-link">Courses</Nav.Link>
+          <Nav.Link href="#teacher" className="text-dark px-3 hover-link">Teachers</Nav.Link>
+          <Nav.Link href="#achievements" className="text-dark px-3 hover-link">Achievements</Nav.Link>
+          <Nav.Link href="#contact" className="text-dark px-3 hover-link">Contact</Nav.Link>
         </Nav>
 
         {/* Nút đăng ký bên phải */}
@@ -44,7 +44,7 @@ function MenuBar() {
           }}
           onClick={handleScrollToContact}
         >
-          Đăng ký ngay
+          Sign up now
         </Button>
       </Container>
     </Navbar>
