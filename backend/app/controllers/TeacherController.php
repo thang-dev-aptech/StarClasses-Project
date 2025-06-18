@@ -15,9 +15,7 @@ class TeacherController extends BaseController {
 
     public function index() {
         try {
-            $search = $_GET['search'] ?? '';
-            $category = $_GET['category'] ?? '';
-            $teachers = $this->teacherModel->getAll($search, $category);
+            $teachers = $this->teacherModel->getAll();
             return $this->success($teachers);
         } catch (\Exception $e) {
             return $this->error('Failed to fetch teachers');
@@ -25,25 +23,16 @@ class TeacherController extends BaseController {
     }
 
     public function show($id) {
-        try {
-            $teacher = $this->teacherModel->getById($id);
-            if (!$teacher) {
-                return $this->error('Teacher not found', 404);
-            }
-            return $this->success($teacher);
-        } catch (\Exception $e) {
-            return $this->error('Failed to fetch teacher');
-        }
+        $teacher = $this->teacherModel->getById($id);
+        return $this->success($teacher);
     }
 
     public function store() {
         $errors = $this->validateRequest([
-            'full_name' => 'required|min:3',
-            'avatar_url' => 'required',
+            'full_name' => 'required|min:3|max:255',
             'subject' => 'required',
-            'experience_years' => 'required',
+            'experience_years' => 'required|numeric|min:0',
             'education' => 'required',
-            'achievements' => 'required',
             'bio' => 'required',
         ]);
 
@@ -52,24 +41,29 @@ class TeacherController extends BaseController {
         }
 
         try {
-            // Handle image upload if provided
+            // Handle image upload
             $imagePath = null;
-            if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
+            if (isset($_FILES['image'])) {
+                $imageError = $this->validateImage($_FILES['image']);
+                if ($imageError) {
+                    return $this->error(['image' => $imageError], 422);
+                }
                 $imagePath = $this->handleImageUpload($_FILES['image']);
             }
 
             $teacherData = [
                 'full_name' => $_POST['full_name'],
-                'avatar_url' => $_POST['avatar_url'],
                 'subject' => $_POST['subject'],
-                'experience_years' => $_POST['experience_years'],
+                'experience_years' => intval($_POST['experience_years']),
                 'education' => $_POST['education'],
-                'achievements' => $_POST['achievements'],
+                'achievements' => isset($_POST['achievements']) ? json_encode(explode("\n", $_POST['achievements'])) : '[]',
                 'bio' => $_POST['bio'] ?? null,
                 'avatar_url' => $imagePath,
+                'is_active' => (isset($_POST['is_active']) && $_POST['is_active'] == 1) ? 1 : 0
             ];
 
-            $teacher = $this->teacherModel->create($teacherData);
+            $teacherID = $this->teacherModel->create($teacherData);
+            $teacher = $this->teacherModel->getById($teacherID);
             return $this->success($teacher, 'Teacher created successfully');
         } catch (\Exception $e) {
             return $this->error('Failed to create teacher');
@@ -77,46 +71,85 @@ class TeacherController extends BaseController {
     }
 
     public function update($id) {
-        $errors = $this->validateRequest([
-            'teacher_name' => 'required|min:3',
-            'category' => 'required',
-            'subject' => 'required',
-            'experience' => 'required',
-        ]);
-
-        if (!empty($errors)) {
-            return $this->error($errors, 422);
-        }
-
         try {
-            $teacherData = [
-                'teacher_name' => $_POST['teacher_name'],
-                'category' => $_POST['category'],
-                'subject' => $_POST['subject'],
-                'experience' => $_POST['experience'],
-                'bio' => $_POST['bio'] ?? null,
-                'image' => null,
-                'is_active' => isset($_POST['is_active']) ? 1 : 0
-            ];
-
-            // Handle image upload if provided
-            if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
-                $teacherData['image'] = $this->handleImageUpload($_FILES['image']);
+            $existingTeacher = $this->teacherModel->getById($id);
+            if (!$existingTeacher) {
+                return $this->error('Teacher not found', 404);
             }
 
+            $errors = $this->validateRequest([
+                'full_name' => 'required|min:3|max:100',
+                'subject' => 'required|max:100',
+                'experience_years' => 'required|numeric|min:0',
+                'education' => 'required',
+                'bio' => 'required',
+            ]);
+
+            if (!empty($errors)) {
+                return $this->error($errors, 422);
+            }
+
+            // Handle image upload
+            $imagePath = $existingTeacher['avatar_url'];
+            if (isset($_FILES['image'])) {
+                $imageError = $this->validateImage($_FILES['image']);
+                if ($imageError) {
+                    return $this->error(['image' => $imageError], 422);
+                }
+                $imagePath = $this->handleImageUpload($_FILES['image']);
+                
+                // Delete old image if exists
+                if ($existingTeacher['avatar_url']) {
+                    $oldImagePath = __DIR__ . '/../../public/' . $existingTeacher['avatar_url'];
+                    if (file_exists($oldImagePath)) {
+                        unlink($oldImagePath);
+                    }
+                }
+            }
+
+            $teacherData = [
+                'full_name' => $_POST['full_name'],
+                'subject' => $_POST['subject'],
+                'experience_years' => intval($_POST['experience_years']),
+                'education' => $_POST['education'],
+                'bio' => $_POST['bio'] ?? null,
+                'achievements' => isset($_POST['achievements']) ? json_encode(explode("\n", $_POST['achievements'])) : '[]',
+                'avatar_url' => $imagePath,
+                'is_active' => (isset($_POST['is_active']) && $_POST['is_active'] == 1) ? 1 : 0
+            ];
+
             $this->teacherModel->update($id, $teacherData);
-            return $this->success(null, 'Teacher updated successfully');
+            $updatedTeacher = $this->teacherModel->getById($id);
+            return $this->success($updatedTeacher, 'Teacher updated successfully');
         } catch (\Exception $e) {
+            $this->logger->error('Failed to update teacher: ' . $e->getMessage());
             return $this->error('Failed to update teacher');
         }
     }
 
     public function delete($id) {
         try {
+            $teacher = $this->teacherModel->getById($id);
+            if (!$teacher) {
+                return $this->error('Course not found', 404);
+            }
+
+            // Delete course image if exists
+            if ($teacher['avatar_url']) {
+                $imagePath = __DIR__ . '/../../public/' . $teacher['avatar_url'];
+                if (file_exists($imagePath)) {
+                    unlink($imagePath);
+                }
+            }
+
             $this->teacherModel->delete($id);
-            return $this->success(null, 'Teacher deleted successfully');
+            return $this->success(null, 'Course deleted successfully');
         } catch (\Exception $e) {
-            return $this->error('Failed to delete teacher');
+            $this->logger->error('Failed to delete teacher: ' . $e->getMessage());
+            if (strpos($e->getMessage(), 'existing enrollments') !== false) {
+                return $this->error('Cannot delete course with existing enrollments', 409);
+            }
+            return $this->error('Failed to delete course');
         }
     }
 
@@ -135,5 +168,24 @@ class TeacherController extends BaseController {
         }
 
         return 'uploads/teachers/' . $filename;
+    }
+
+    private function validateImage($file) {
+        $allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
+        $maxSize = 5 * 1024 * 1024; // 5MB
+
+        if ($file['error'] !== UPLOAD_ERR_OK) {
+            return 'File upload failed';
+        }
+
+        if (!in_array($file['type'], $allowedTypes)) {
+            return 'Invalid file type. Only JPG, PNG and GIF are allowed';
+        }
+
+        if ($file['size'] > $maxSize) {
+            return 'File size exceeds 5MB limit';
+        }
+
+        return null;
     }
 }

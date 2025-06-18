@@ -1,0 +1,9 @@
+.course-card-hover {
+    transition: box-shadow 0.25s cubic-bezier(.4,1.2,.4,1), transform 0.22s cubic-bezier(.4,1.2,.4,1);
+    will-change: box-shadow, transform;
+  }
+  .course-card-hover:hover {
+    box-shadow: 0 8px 32px 0 rgba(16, 30, 54, 0.10), 0 1.5px 6px 0 rgba(16, 30, 54, 0.08);
+    transform: translateY(-4px) scale(1.025);
+    z-index: 2;
+  }

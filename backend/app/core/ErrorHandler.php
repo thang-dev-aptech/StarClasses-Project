@@ -37,7 +37,7 @@ class ErrorHandler {
         
         $response = [
             'error' => true,
-            'message' => $_ENV['APP_ENV'] === 'production' 
+            'message' => $_ENV['APP_ENV'] === 'development' 
                 ? 'Internal Server Error' 
                 : $exception->getMessage()
         ];

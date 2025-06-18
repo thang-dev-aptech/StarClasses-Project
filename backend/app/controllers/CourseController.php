@@ -7,8 +7,6 @@ use App\Models\Course;
 
 class CourseController extends BaseController {
     private $courseModel;
-    private const ALLOWED_EXTENSIONS = ['jpg', 'jpeg', 'png', 'gif'];
-    private const MAX_FILE_SIZE = 2 * 1024 * 1024; // 2MB
 
     public function __construct() {
         parent::__construct();
@@ -17,20 +15,8 @@ class CourseController extends BaseController {
 
     public function index() {
         try {
-            $page = isset($_GET['page']) ? max(1, intval($_GET['page'])) : 1;
-            $limit = isset($_GET['limit']) ? max(1, intval($_GET['limit'])) : 10;
-            $search = $_GET['search'] ?? '';
-            $category = $_GET['category'] ?? '';
-            
-            $result = $this->courseModel->getAll($search, $category, $page, $limit);
-            
-            // Process JSON fields
-            foreach ($result['data'] as &$course) {
-                $course['schedule'] = json_decode($course['schedule'] ?? '[]');
-                $course['learning_outcomes'] = json_decode($course['learning_outcomes'] ?? '[]');
-            }
-            
-            return $this->success($result);
+            $courses = $this->courseModel->getAll();
+            return $this->success($courses);
         } catch (\Exception $e) {
             $this->logger->error('Failed to fetch courses: ' . $e->getMessage());
             return $this->error('Failed to fetch courses');
@@ -38,28 +24,17 @@ class CourseController extends BaseController {
     }
 
     public function show($id) {
-        try {
-            $course = $this->courseModel->getById($id);
-            if (!$course) {
-                return $this->error('Course not found', 404);
-            }
-            return $this->success($course);
-        } catch (\Exception $e) {
-            $this->logger->error('Failed to fetch course: ' . $e->getMessage());
-            return $this->error('Failed to fetch course');
-        }
+        $course = $this->courseModel->getById($id);
+        return $this->success($course);
     }
 
     public function store() {
         $errors = $this->validateRequest([
             'course_name' => 'required|min:3|max:255',
-            'description' => 'required|min:10',
             'category' => 'required',
-            'price' => 'required|numeric|positive',
-            'teacher_id' => 'required|numeric|positive',
-            'overview' => 'min:10',
-            'schedule' => 'array',
-            'learning_outcomes' => 'array'
+            'price' => 'required|numeric|min:0',
+            'description' => 'required',
+            'teacher_id' => 'required|numeric'
         ]);
 
         if (!empty($errors)) {
@@ -77,26 +52,25 @@ class CourseController extends BaseController {
                 $imagePath = $this->handleImageUpload($_FILES['image']);
             }
 
-            // Process arrays
-            $schedule = $this->processArrayField($_POST['schedule'] ?? '');
-            $learning_outcomes = $this->processArrayField($_POST['learning_outcomes'] ?? '');
-
             $courseData = [
                 'course_name' => $_POST['course_name'],
-                'description' => $_POST['description'],
-                'price' => floatval($_POST['price']),
                 'category' => $_POST['category'],
-                'teacher_id' => intval($_POST['teacher_id']),
+                'price' => floatval($_POST['price']),
+                'description' => $_POST['description'],
                 'overview' => $_POST['overview'] ?? '',
-                'schedule' => json_encode($schedule),
-                'learning_outcomes' => json_encode($learning_outcomes),
+                'schedule' => isset($_POST['schedule']) && is_string($_POST['schedule'])
+                    ? $_POST['schedule']
+                    : json_encode($_POST['schedule'] ?? []),
+                'learning_outcomes' => isset($_POST['learning_outcomes']) && is_string($_POST['learning_outcomes'])
+                    ? $_POST['learning_outcomes']
+                    : json_encode($_POST['learning_outcomes'] ?? []),
                 'image_url' => $imagePath,
-                'is_active' => isset($_POST['is_active']) ? 1 : 0
+                'teacher_id' => intval($_POST['teacher_id']),
+                'is_active' => (isset($_POST['is_active']) && $_POST['is_active'] == 1) ? 1 : 0
             ];
 
             $courseId = $this->courseModel->create($courseData);
             $course = $this->courseModel->getById($courseId);
-
             return $this->success($course, 'Course created successfully');
         } catch (\Exception $e) {
             $this->logger->error('Failed to create course: ' . $e->getMessage());
@@ -105,27 +79,24 @@ class CourseController extends BaseController {
     }
 
     public function update($id) {
+
         try {
-            // Check if course exists
             $existingCourse = $this->courseModel->getById($id);
             if (!$existingCourse) {
                 return $this->error('Course not found', 404);
             }
 
-        $errors = $this->validateRequest([
+            $errors = $this->validateRequest([
                 'course_name' => 'required|min:3|max:255',
-                'description' => 'required|min:10',
-            'category' => 'required',
-                'price' => 'required|numeric|positive',
-                'teacher_id' => 'required|numeric|positive',
-                'overview' => 'min:10',
-                'schedule' => 'array',
-                'learning_outcomes' => 'array'
-        ]);
+                'category' => 'required',
+                'price' => 'required|numeric|min:0',
+                'description' => 'required',
+                'teacher_id' => 'required|numeric'
+            ]);
 
-        if (!empty($errors)) {
-            return $this->error($errors, 422);
-        }
+            if (!empty($errors)) {
+                return $this->error($errors, 422);
+            }
 
             // Handle image upload
             $imagePath = $existingCourse['image_url'];
@@ -145,21 +116,21 @@ class CourseController extends BaseController {
                 }
             }
 
-            // Process arrays
-            $schedule = $this->processArrayField($_POST['schedule'] ?? '');
-            $learning_outcomes = $this->processArrayField($_POST['learning_outcomes'] ?? '');
-
             $courseData = [
                 'course_name' => $_POST['course_name'],
-                'description' => $_POST['description'],
-                'price' => floatval($_POST['price']),
                 'category' => $_POST['category'],
-                'teacher_id' => intval($_POST['teacher_id']),
+                'price' => floatval($_POST['price']),
+                'description' => $_POST['description'],
                 'overview' => $_POST['overview'] ?? '',
-                'schedule' => json_encode($schedule),
-                'learning_outcomes' => json_encode($learning_outcomes),
+                'schedule' => isset($_POST['schedule']) && is_string($_POST['schedule'])
+                    ? $_POST['schedule']
+                    : json_encode($_POST['schedule'] ?? []),
+                'learning_outcomes' => isset($_POST['learning_outcomes']) && is_string($_POST['learning_outcomes'])
+                    ? $_POST['learning_outcomes']
+                    : json_encode($_POST['learning_outcomes'] ?? []),
                 'image_url' => $imagePath,
-                'is_active' => isset($_POST['is_active']) ? 1 : 0
+                'teacher_id' => intval($_POST['teacher_id']),
+                'is_active' => (isset($_POST['is_active']) && $_POST['is_active'] == 1) ? 1 : 0
             ];
 
             $this->courseModel->update($id, $courseData);
@@ -197,31 +168,23 @@ class CourseController extends BaseController {
         }
     }
 
-    public function getCategories() {
-        try {
-            $categories = $this->courseModel->getCategories();
-            return $this->success($categories);
-        } catch (\Exception $e) {
-            $this->logger->error('Failed to fetch categories: ' . $e->getMessage());
-            return $this->error('Failed to fetch categories');
-        }
-    }
-
     private function validateImage($file) {
+        $allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
+        $maxSize = 5 * 1024 * 1024; // 5MB
+
         if ($file['error'] !== UPLOAD_ERR_OK) {
             return 'File upload failed';
         }
 
-        $extension = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
-        if (!in_array($extension, self::ALLOWED_EXTENSIONS)) {
-            return 'Invalid file type. Allowed types: ' . implode(', ', self::ALLOWED_EXTENSIONS);
+        if (!in_array($file['type'], $allowedTypes)) {
+            return 'Invalid file type. Only JPG, PNG and GIF are allowed';
         }
 
-        if ($file['size'] > self::MAX_FILE_SIZE) {
-            return 'File size exceeds 2MB limit';
+        if ($file['size'] > $maxSize) {
+            return 'File size exceeds 5MB limit';
         }
 
-        return false;
+        return null;
     }
 
     private function handleImageUpload($file) {
@@ -230,7 +193,7 @@ class CourseController extends BaseController {
             mkdir($uploadDir, 0755, true);
         }
 
-        $extension = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+        $extension = pathinfo($file['name'], PATHINFO_EXTENSION);
         $filename = uniqid() . '.' . $extension;
         $filepath = $uploadDir . $filename;
 
@@ -239,21 +202,5 @@ class CourseController extends BaseController {
         }
 
         return 'uploads/courses/' . $filename;
-    }
-
-    private function processArrayField($data) {
-        if (empty($data)) {
-            return [];
-        }
-
-        if (is_string($data)) {
-            $array = explode("\n", $data);
-        } else if (is_array($data)) {
-            $array = $data;
-        } else {
-            return [];
-        }
-
-        return array_values(array_filter(array_map('trim', $array)));
     }
 }

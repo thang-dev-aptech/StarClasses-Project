@@ -1,0 +1,33 @@
+#contact{
+  background: rgb(248, 249, 251);
+}
+
+.form-control:focus {
+  border-color: hsl(48, 96%, 53%, 1) !important;
+  box-shadow: 0 0 0 2px hsl(48, 96%, 53%, 1);
+ 
+}
+.form-select:focus {
+  border-color: hsl(48, 96%, 53%, 1) !important;
+  box-shadow: 0 0 0 2px hsl(48, 96%, 53%, 1);
+}
+
+
+.input-error{
+  border-color: hsl(0, 90%, 51%) !important;
+  box-shadow: 0 0 0 2px hsl(0, 90%, 51%) ;
+}
+
+
+
+.course-popup-dialog {
+  margin: 0 auto;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  position: fixed !important;
+  max-width: 900px;
+  width: 95vw;
+  min-width: 320px;
+  z-index: 1055;
+}

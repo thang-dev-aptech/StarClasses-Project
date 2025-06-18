@@ -36,11 +36,6 @@ class Router {
     public function post($path, $handler){
         $this->addRoute('POST', $path, $handler);
     }
-
-    public function put($path, $handler){
-        $this->addRoute('PUT', $path, $handler);
-    }
-
     public function delete($path, $handler){
         $this->addRoute('DELETE', $path, $handler);
     }

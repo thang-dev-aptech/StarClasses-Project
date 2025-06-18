@@ -7,37 +7,41 @@ use App\Core\BaseModel;
 class Teacher extends BaseModel {
     protected $table = 'teachers';
 
-    public function getAll($search = '', $category = '') {
-        $sql = "SELECT * FROM {$this->table} WHERE 1";
-        $params = [];
-        if (!empty($search)) {
-            $sql .= " AND course_name LIKE :search";
-            $params['search'] = "%$search%";
+    // Lấy tất cả giáo viên
+    public function getAll() {
+        try {
+            $sql = "SELECT * FROM {$this->table} ORDER BY created_at DESC";
+            $teachers = $this->db->query($sql)->fetchAll();
+            foreach ($teachers as &$teacher) {
+                $teacher['achievements'] = json_decode($teacher['achievements'] ?? '[]', true);
+            }
+            return $teachers;
+        } catch (\PDOException $e) {
+            error_log("Get All Teachers Error: " . $e->getMessage());
+            throw new \Exception('Failed to get teachers');
         }
-        if (!empty($category) && $category !== 'all') {
-            $sql .= " AND category = :category";
-            $params['category'] = $category;
-        }
-        $sql .= " ORDER BY created_at DESC";
-        $stmt = $this->db->query($sql, $params);
-        return $stmt->fetchAll();
     }
 
-    // Lấy chi tiết một khóa học
+    
     public function getById($id) {
         try {
             $sql = "SELECT * FROM {$this->table} WHERE id = :id";
-            $stmt = $this->db->query($sql, ['id' => $id]);
-            return $stmt->fetch();
+            $teacher = $this->db->query($sql, ['id' => $id])->fetch();
+            if ($teacher) {
+                $teacher['achievements'] = json_decode($teacher['achievements'] ?? '[]', true);
+            }
+            return $teacher;
         } catch (\PDOException $e) {
-            error_log("Get Course Error: " . $e->getMessage());
-            throw new \Exception('Failed to get course');
+            error_log("Get Teacher Error: " . $e->getMessage());
+            throw new \Exception('Failed to get teacher');
         }
     }
 
-    // Thêm mới khóa học
+    // Thêm mới giáo viên
     public function create($data) {
         try {
+            
+            $data['created_at'] = date('Y-m-d H:i:s');
             $columns = implode(', ', array_keys($data));
             $values = ':' . implode(', :', array_keys($data));
             
@@ -46,14 +50,15 @@ class Teacher extends BaseModel {
             
             return $this->db->getConnection()->lastInsertId();
         } catch (\PDOException $e) {
-            error_log("Create Course Error: " . $e->getMessage());
-            throw new \Exception('Failed to create course');
+            error_log("Create Teacher Error: " . $e->getMessage());
+            throw new \Exception('Failed to create teacher');
         }
     }
 
-    // Cập nhật khóa học
+    // Cập nhật giáo viên
     public function update($id, $data) {
         try {
+            
             $setClause = implode(', ', array_map(function($key) {
                 return "$key = :$key";
             }, array_keys($data)));
@@ -63,24 +68,20 @@ class Teacher extends BaseModel {
             
             return $this->db->query($sql, $data);
         } catch (\PDOException $e) {
-            error_log("Update Course Error: " . $e->getMessage());
-            throw new \Exception('Failed to update course');
+            error_log("Update Teacher Error: " . $e->getMessage());
+            throw new \Exception('Failed to update teacher');
         }
     }
 
-    // Xóa khóa học
+    // Xóa giáo viên
     public function delete($id) {
         try {
-            // Xóa bản ghi trước
-            $this->db->query("DELETE FROM {$this->table} WHERE id = :id", ['id' => $id]);
-            // Đẩy các id phía sau lên
-            $this->db->query('UPDATE courses SET id = id - 1 WHERE id > ?', [$id]);
-            $maxId = $this->db->query('SELECT MAX(id) as max_id FROM courses')->fetch()['max_id'] ?? 0;
-            $this->db->query('ALTER TABLE courses AUTO_INCREMENT = ' . ((int)$maxId + 1));
-            return true;
-        } catch (\Exception $e) {
+            return $this->db->query("DELETE FROM {$this->table} WHERE id = :id", ['id' => $id]);
+        } catch (\PDOException $e) {
             error_log("Delete Course Error: " . $e->getMessage());
             throw new \Exception('Failed to delete course');
         }
     }
+
+    
 }

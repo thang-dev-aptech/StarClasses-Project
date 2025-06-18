@@ -15,11 +15,8 @@ $router->get('/', function() {
         'endpoints' => [
             'courses' => '/api/courses',
             'teachers' => '/api/teachers',
-            'consult-requests' => '/api/consult-requests',
-            'auth' => [
-                'login' => '/api/auth/login',
-                'logout' => '/api/auth/logout'
-            ]
+            'contact' => '/api/contact',
+            'dashboard' => '/api/admin/dashboard'
         ]
     ]);
 });
@@ -38,9 +35,23 @@ $router->post('/api/teachers', 'TeacherController@store');
 $router->post('/api/teachers/{id}', 'TeacherController@update');
 $router->delete('/api/teachers/{id}', 'TeacherController@delete');
 
-// Consult request routes
-$router->get('/api/consult-requests', 'ConsultRequestController@index');
-$router->post('/api/consult-requests', 'ConsultRequestController@store');
-$router->put('/api/consult-requests/{id}', 'ConsultRequestController@update');
+// Contact routes
+$router->get('/api/contact', 'ContactController@index');
+
+$router->post('/api/contact', 'ContactController@store');
+$router->post('/api/contact/{id}/status', 'ContactController@updateStatus');
+
+// Admin login route
+$router->post('/api/admin/login', 'AdminController@login');
+
+// Admin info route
+$router->get('/api/admin', 'AdminController@getInfo');
+
+// Dashboard overview route
+$router->get('/api/admin/dashboard/overview', 'DashboardController@getDashboardOverview');
+
+// Introduction routes
+$router->get('/api/introduction', 'IntroductionController@index');
+
 
 return $router;

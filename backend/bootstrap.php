@@ -35,19 +35,23 @@ ini_set('display_errors', '1');
 // autoloader 
 require_once __DIR__ . '/vendor/autoload.php';
 
-// CORS header 
-header('Access-Control-Allow-Origin: ' . ($ENV['CORS_ALLOW_ORIGIN'] ?? '*'));
-header('Access-Control-Allow-Methods: GET, POST, PUT, PATCH, DELETE, OPTIONS');
-header('Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With');
+// Chỉ thêm HTTP headers khi chạy qua web server
+if (php_sapi_name() !== 'cli') {
+    // CORS header 
+    header('Access-Control-Allow-Origin: ' . ($ENV['CORS_ALLOW_ORIGIN'] ?? '*'));
+    header('Access-Control-Allow-Methods: GET, POST, PUT, PATCH, DELETE, OPTIONS');
+    header('Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With');
 
-// security header
-header('X-Content-Type-Options: nosniff');
-header('X-Frame-Options: DENY');
-header('X-XSS-Protection: 1; mode=block');
+    // security header
+    header('X-Content-Type-Options: nosniff');
+    header('X-Frame-Options: DENY');
+    header('X-XSS-Protection: 1; mode=block');
 
-if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
-    http_response_code(204);
-    exit;
+    // Chỉ kiểm tra REQUEST_METHOD khi chạy qua web server
+    if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+        http_response_code(204);
+        exit;
+    }
 }
 
 use App\Core\{Database, Logger, ErrorHandler};
@@ -61,8 +65,12 @@ $logger = Logger::getInstance();
 // khởi  database connection
 try {
     $db = Database::getInstance();
+    $conn = $db->getConnection();
 } catch (\Exception $e) {
     error_log("Database initialization error: " . $e->getMessage());
     die('Database initialization failed: ' . $e->getMessage());
 }
+
+// timezone
+date_default_timezone_set('Asia/Ho_Chi_Minh');
 ?>

@@ -68,8 +68,4 @@ class Database {
     public function getConnection() {
         return $this->conn;
     }
-
-    public function lastInsertId() {
-        return $this->conn->lastInsertId();
-    }
 }
