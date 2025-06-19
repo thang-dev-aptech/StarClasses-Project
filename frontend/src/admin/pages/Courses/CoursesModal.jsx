@@ -9,8 +9,9 @@ const initialFormState = {
     price: '',
     description: '',
     overview: '',
-    schedule_day: '',
-    schedule_time: '',
+    schedule_entries: [
+        { day: '', time: '' }
+    ],
     image_url: '',
     learning_outcomes: '',
     teacher_id: '',
@@ -29,6 +30,7 @@ function CoursesModal({ show, onHide, course, onSuccess, teachers = [] }) {
     const [errors, setErrors] = useState({});
     const [loading, setLoading] = useState(false);
     const [imagePreview, setImagePreview] = useState('');
+    const [scheduleEntries, setScheduleEntries] = useState([{ day: '', time: '' }]);
 
     // Effect để đồng bộ state local với prop show
     useEffect(() => {
@@ -38,10 +40,60 @@ function CoursesModal({ show, onHide, course, onSuccess, teachers = [] }) {
     // Effect để cập nhật form khi có dữ liệu khóa học
     useEffect(() => {
         if (course) {
+            // Normalize schedule into array of {day,time}
+            const entries = [];
+            let raw = course.schedule;
+                if (typeof raw === 'string') {
+                    const trimmed = raw.trim();
+                    if ((trimmed.startsWith('[') && trimmed.endsWith(']')) || (trimmed.startsWith('{') && trimmed.endsWith('}'))) {
+                        try {
+                            raw = JSON.parse(trimmed);
+                        } catch {
+                            // ignore parse error, will treat as plain string
+                        }
+                    }
+                }
+            if (raw) {
+                if (Array.isArray(raw)) {
+                    raw.forEach(item => {
+                        if (typeof item === 'string') {
+                            let dayStr = '';
+                            let timeStr = '';
+                            const delim = item.includes(' : ') ? ' : ' : ':';
+                            const idxDelim = item.indexOf(delim);
+                            if (idxDelim !== -1) {
+                                dayStr = item.slice(0, idxDelim).trim();
+                                timeStr = item.slice(idxDelim + delim.length).trim();
+                            } else {
+                                dayStr = item.trim();
+                            }
+                            entries.push({ day: dayStr, time: timeStr });
+                        } else if (item && typeof item === 'object') {
+                            const obj = item.schedule ? item.schedule : item;
+                            entries.push({ day: obj.day || '', time: obj.time || '' });
+                        }
+                    });
+                } else if (raw && typeof raw === 'object') {
+                    const obj = raw.schedule ? raw.schedule : raw;
+                    entries.push({ day: obj.day || '', time: obj.time || '' });
+                } else if (typeof raw === 'string') {
+                    let dayStr = '';
+                    let timeStr = '';
+                    const delim = raw.includes(' : ') ? ' : ' : ':';
+                    const idxDelim = raw.indexOf(delim);
+                    if (idxDelim !== -1) {
+                        dayStr = raw.slice(0, idxDelim).trim();
+                        timeStr = raw.slice(idxDelim + delim.length).trim();
+                    } else {
+                        dayStr = raw.trim();
+                    }
+                    entries.push({ day: dayStr, time: timeStr });
+                }
+            }
+
+            setScheduleEntries(entries.length ? entries : [{ day: '', time: '' }]);
             setFormData({
                 ...course,
-                schedule_day: course.schedule && course.schedule.schedule ? course.schedule.schedule.day || '' : '',
-                schedule_time: course.schedule && course.schedule.schedule ? course.schedule.schedule.time || '' : '',
                 learning_outcomes: course.learning_outcomes && Array.isArray(course.learning_outcomes.outcomes)
                     ? course.learning_outcomes.outcomes.join('\n')
                     : ''
@@ -49,6 +101,7 @@ function CoursesModal({ show, onHide, course, onSuccess, teachers = [] }) {
             setImagePreview(course.image_url || '');
         } else {
             setFormData(initialFormState);
+            setScheduleEntries([{ day: '', time: '' }]);
             setImagePreview('');
         }
         setErrors({});
@@ -58,6 +111,7 @@ function CoursesModal({ show, onHide, course, onSuccess, teachers = [] }) {
     const handleClose = () => {
         setIsModalOpen(false);
         setFormData(initialFormState);
+        setScheduleEntries([{ day: '', time: '' }]);
         setErrors({});
         setImagePreview('');
         onHide();
@@ -146,12 +200,10 @@ function CoursesModal({ show, onHide, course, onSuccess, teachers = [] }) {
             const submitData = {
                 ...formData,
                 teacher_id: formData.teacher_id,
-                schedule: {
-                    schedule: {
-                        day: formData.schedule_day || '',
-                        time: formData.schedule_time || ''
-                    }
-                },
+                schedule_entries: scheduleEntries,
+                schedule: scheduleEntries
+                    .filter(e => e.day || e.time)
+                    .map(e => `${e.day.trim()} : ${e.time.trim()}`),
                 learning_outcomes: {
                     outcomes: formData.learning_outcomes
                         ? formData.learning_outcomes.split('\n').map(s => s.trim()).filter(Boolean)
@@ -179,6 +231,27 @@ function CoursesModal({ show, onHide, course, onSuccess, teachers = [] }) {
         } finally {
             setLoading(false);
         }
+    };
+
+    // Add schedule handlers after handleChange
+    const handleScheduleChange = (index, field, value) => {
+        setScheduleEntries(prev => {
+            const newArr = [...prev];
+            newArr[index] = { ...newArr[index], [field]: value };
+            return newArr;
+        });
+    };
+
+    const addScheduleEntry = () => {
+        setScheduleEntries(prev => [...prev, { day: '', time: '' }]);
+    };
+
+    const removeScheduleEntry = (index) => {
+        setScheduleEntries(prev => {
+            const arr = [...prev];
+            arr.splice(index, 1);
+            return arr.length ? arr : [{ day: '', time: '' }];
+        });
     };
 
     return (
@@ -323,38 +396,39 @@ function CoursesModal({ show, onHide, course, onSuccess, teachers = [] }) {
                             </div>
 
                             <div className="mb-4">
-                                <Row className="g-3">
-                                    <Col md={6}>
-                                        <Form.Group>
-                                            <Form.Label>Schedule Day</Form.Label>
+                                <Form.Label className="d-block">Schedule</Form.Label>
+                                {scheduleEntries.map((entry, idx) => (
+                                    <Row className="g-2 align-items-end mb-2" key={idx}>
+                                        <Col md={5}>
                                             <Form.Control
                                                 type="text"
-                                                name="schedule_day"
-                                                value={formData.schedule_day}
-                                                onChange={handleChange}
-                                                placeholder="Example: Mon, Wed, Fri"
+                                                value={entry.day}
+                                                onChange={e => handleScheduleChange(idx, 'day', e.target.value)}
+                                                placeholder="Days e.g., Mon, Wed, Fri"
                                             />
-                                            <Form.Text className="text-muted">
-                                                Days of the week, e.g., Mon, Wed, Fri
-                                            </Form.Text>
-                                        </Form.Group>
-                                    </Col>
-                                    <Col md={6}>
-                                        <Form.Group>
-                                            <Form.Label>Schedule Time</Form.Label>
+                                        </Col>
+                                        <Col md={5}>
                                             <Form.Control
                                                 type="text"
-                                                name="schedule_time"
-                                                value={formData.schedule_time}
-                                                onChange={handleChange}
-                                                placeholder="Example: 18:00-20:00"
+                                                value={entry.time}
+                                                onChange={e => handleScheduleChange(idx, 'time', e.target.value)}
+                                                placeholder="Time e.g., 18:00-20:00"
                                             />
-                                            <Form.Text className="text-muted">
-                                                Study time, e.g., 18:00-20:00
-                                            </Form.Text>
-                                        </Form.Group>
-                                    </Col>
-                                </Row>
+                                        </Col>
+                                        <Col md={2} className="d-flex">
+                                            {idx === 0 ? (
+                                                <Button variant="outline-primary" onClick={addScheduleEntry} className="w-100">+
+                                                </Button>
+                                            ) : (
+                                                <Button variant="outline-danger" onClick={() => removeScheduleEntry(idx)} className="w-100">-
+                                                </Button>
+                                            )}
+                                        </Col>
+                                    </Row>
+                                ))}
+                                <Form.Text className="text-muted">
+                                    You can add multiple day/time rows.
+                                </Form.Text>
                             </div>
 
                             <div className="mb-4">

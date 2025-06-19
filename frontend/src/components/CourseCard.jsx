@@ -29,7 +29,7 @@ export default function CourseCard({ course, onChangModal }) {
                     />
                     <div>
                         <div className="fw-semibold">{course.teacher.name}</div>
-                        <div className="text-muted small">{course.teacher.experience}</div>
+                        <div className="text-muted small">{course.teacher.experience} years</div>
                     </div>
                 </div>
                 {/* Tags */}

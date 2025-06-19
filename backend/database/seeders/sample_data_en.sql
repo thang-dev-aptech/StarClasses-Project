@@ -24,6 +24,9 @@ INSERT INTO courses (course_name,category,price,description,overview,schedule,im
 ('National Exam Geography Prep','Social',1500000,'Geography knowledge review with practical exercises.','Physical, economic & social geography, practice tests.','["Fri: 18:00-20:00","Sun: 16:00-18:00"]','uploads/courses/684f9010adde9.jpg','["Solid foundation","Chart drawing skills","Analysis"]',7),
 ('National Exam English Prep','Languages',1900000,'Strategies for high English scores with skill practice.','Grammar, vocabulary, reading comprehension, practice tests.','["Sat: 9:00-11:00","Sun: 13:00-15:00"]','uploads/courses/684f90f2962fc.jpg','["Grammar mastery","Exam techniques"]',8);
 
+
 -- INTRODUCTION
 INSERT INTO introduction (badge_text,title,highlight,description,image_url) VALUES
 ('HOT Course','Conquer the<br/>National Exam','HOT','Comprehensive knowledge and exam skills to boost your scores.','uploads/introduction/main.jpg'); 
+
+

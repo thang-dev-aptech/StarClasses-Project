@@ -28,9 +28,6 @@ class ContactController extends BaseController
     }
     public function store()
     {
-        // Lấy dữ liệu từ $_POST hoặc $_REQUEST
-        $input = !empty($_POST) ? $_POST : $_REQUEST;
-
         $errors = $this->validateRequest([
             'first_name' => 'required|min:2|max:20',
             'last_name' => 'required|min:2|max:20',

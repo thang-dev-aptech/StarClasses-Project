@@ -25,12 +25,18 @@ export const courseService = {
             formData.append('price', courseData.price);
             formData.append('description', courseData.description);
             formData.append('overview', courseData.overview || '');
-            formData.append('schedule', JSON.stringify({
-                schedule: {
-                    day: courseData.schedule_day,
-                    time: courseData.schedule_time
-                }
-            }));
+            if (Array.isArray(courseData.schedule)) {
+                formData.append('schedule', JSON.stringify(courseData.schedule));
+            } else if (Array.isArray(courseData.schedule_entries)) {
+                formData.append('schedule', JSON.stringify(courseData.schedule_entries));
+            } else {
+                formData.append('schedule', JSON.stringify({
+                    schedule: {
+                        day: courseData.schedule_day,
+                        time: courseData.schedule_time
+                    }
+                }));
+            }
             let outcomesArr = [];
             if (typeof courseData.learning_outcomes === 'string') {
                 outcomesArr = courseData.learning_outcomes.split('\n').map(s => s.trim()).filter(Boolean);
@@ -72,12 +78,18 @@ export const courseService = {
             formData.append('price', courseData.price);
             formData.append('description', courseData.description);
             formData.append('overview', courseData.overview || '');
-            formData.append('schedule', JSON.stringify({
-                schedule: {
-                    day: courseData.schedule_day,
-                    time: courseData.schedule_time
-                }
-            }));
+            if (Array.isArray(courseData.schedule)) {
+                formData.append('schedule', JSON.stringify(courseData.schedule));
+            } else if (Array.isArray(courseData.schedule_entries)) {
+                formData.append('schedule', JSON.stringify(courseData.schedule_entries));
+            } else {
+                formData.append('schedule', JSON.stringify({
+                    schedule: {
+                        day: courseData.schedule_day,
+                        time: courseData.schedule_time
+                    }
+                }));
+            }
             let outcomesArr = [];
             if (typeof courseData.learning_outcomes === 'string') {
                 outcomesArr = courseData.learning_outcomes.split('\n').map(s => s.trim()).filter(Boolean);

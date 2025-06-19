@@ -120,15 +120,38 @@ function CoursePopup({ show, onHide, course }) {
                     </div>
                   ))}
                 </div>
-                {/* Lịch học */}
+                {/* Schedule */}
                 <div className="fw-bold mb-2" style={{ fontSize: 17 }}>Schedule</div>
                 <div>
-                  {(course.schedule || []).map((item, idx) => (
-                    <div className="mb-1 d-flex align-items-center" key={idx}>
-                      <Calendar size={18} className="me-2 text-primary" />
-                      <span>{item}</span>
-                    </div>
-                  ))}
+                  {(() => {
+                    // Normalize schedule into an array of display strings
+                    const raw = course.schedule;
+                    let items = [];
+
+                    if (Array.isArray(raw)) {
+                      // Old format: array of strings
+                      items = raw;
+                    } else if (raw && typeof raw === 'object') {
+                      // Possible new format: { schedule: { day, time } } or { day, time }
+                      const sched = raw.schedule ? raw.schedule : raw;
+                      const day = sched.day || '';
+                      const time = sched.time || '';
+                      const formatted = `${day}${day && time ? ' : ' : ''}${time}`.trim();
+                      if (formatted) items = [formatted];
+                    } else if (typeof raw === 'string') {
+                      items = [raw];
+                    }
+
+                    return items.map((rawText, idx) => {
+                      const text = typeof rawText === 'string' ? rawText.replace(' | ', ' : ') : rawText;
+                      return (
+                        <div className="mb-1 d-flex align-items-center" key={idx}>
+                          <Calendar size={18} className="me-2 text-primary" />
+                          <span>{text}</span>
+                        </div>
+                      );
+                    });
+                  })()}
                 </div>
                 {/* Giá tiền */}
                 {course.price && (

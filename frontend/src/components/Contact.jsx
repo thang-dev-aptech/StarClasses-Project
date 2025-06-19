@@ -26,9 +26,7 @@ function Contact() {
         const data = await response.json();
         if (data.status === "success" && Array.isArray(data.data)) {
           setCourses(data.data);
-        } else if (data.status === "success" && Array.isArray(data)) {
-          setCourses(data);
-        } else {
+        }  else {
           console.error('Invalid data format received:', data);
         }
       } catch (error) {
@@ -119,7 +117,7 @@ function Contact() {
               <p className="text-secondary mb-4">
                 Fill in the form below and we will respond shortly.
               </p>
-              <form onSubmit={handleSubmit} autoComplete="off">
+              <form onSubmit={handleSubmit}>
                 <div className="row mb-3">
                   <div className="col-md-6 mb-3 mb-md-0">
                     <label className="form-label fw-medium">First Name</label>
