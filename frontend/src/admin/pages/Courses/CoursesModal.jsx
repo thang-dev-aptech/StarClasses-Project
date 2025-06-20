@@ -73,9 +73,6 @@ function CoursesModal({ show, onHide, course, onSuccess, teachers = [] }) {
                             entries.push({ day: obj.day || '', time: obj.time || '' });
                         }
                     });
-                } else if (raw && typeof raw === 'object') {
-                    const obj = raw.schedule ? raw.schedule : raw;
-                    entries.push({ day: obj.day || '', time: obj.time || '' });
                 } else if (typeof raw === 'string') {
                     let dayStr = '';
                     let timeStr = '';
@@ -92,11 +89,19 @@ function CoursesModal({ show, onHide, course, onSuccess, teachers = [] }) {
             }
 
             setScheduleEntries(entries.length ? entries : [{ day: '', time: '' }]);
+            let outcomesStr = '';
+             if (typeof course.learning_outcomes === 'string') {
+                // Có thể backend trả chuỗi JSON
+                try {
+                    const parsed = JSON.parse(course.learning_outcomes);
+                    if (Array.isArray(parsed)) {
+                        outcomesStr = parsed.join('\n');
+                    }
+                } catch { /* không phải JSON, giữ trống */ }}
+
             setFormData({
                 ...course,
-                learning_outcomes: course.learning_outcomes && Array.isArray(course.learning_outcomes.outcomes)
-                    ? course.learning_outcomes.outcomes.join('\n')
-                    : ''
+                learning_outcomes: outcomesStr
             });
             setImagePreview(course.image_url || '');
         } else {
@@ -204,11 +209,9 @@ function CoursesModal({ show, onHide, course, onSuccess, teachers = [] }) {
                 schedule: scheduleEntries
                     .filter(e => e.day || e.time)
                     .map(e => `${e.day.trim()} : ${e.time.trim()}`),
-                learning_outcomes: {
-                    outcomes: formData.learning_outcomes
-                        ? formData.learning_outcomes.split('\n').map(s => s.trim()).filter(Boolean)
-                        : []
-                }
+                learning_outcomes: formData.learning_outcomes
+                    ? formData.learning_outcomes.split('\n').map(s => s.trim()).filter(Boolean)
+                    : []
             };
             let result;
             if (course?.id) {

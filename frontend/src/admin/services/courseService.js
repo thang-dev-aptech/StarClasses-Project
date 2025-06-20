@@ -42,10 +42,8 @@ export const courseService = {
                 outcomesArr = courseData.learning_outcomes.split('\n').map(s => s.trim()).filter(Boolean);
             } else if (Array.isArray(courseData.learning_outcomes)) {
                 outcomesArr = courseData.learning_outcomes;
-            } else if (courseData.learning_outcomes && Array.isArray(courseData.learning_outcomes.outcomes)) {
-                outcomesArr = courseData.learning_outcomes.outcomes;
             }
-            formData.append('learning_outcomes', JSON.stringify({ outcomes: outcomesArr }));
+            formData.append('learning_outcomes', JSON.stringify(outcomesArr));
             // Upload file ảnh nếu có
             if (courseData.image instanceof File) {
                 formData.append('image', courseData.image);
@@ -95,10 +93,8 @@ export const courseService = {
                 outcomesArr = courseData.learning_outcomes.split('\n').map(s => s.trim()).filter(Boolean);
             } else if (Array.isArray(courseData.learning_outcomes)) {
                 outcomesArr = courseData.learning_outcomes;
-            } else if (courseData.learning_outcomes && Array.isArray(courseData.learning_outcomes.outcomes)) {
-                outcomesArr = courseData.learning_outcomes.outcomes;
             }
-            formData.append('learning_outcomes', JSON.stringify({ outcomes: outcomesArr }));
+            formData.append('learning_outcomes', JSON.stringify(outcomesArr));
             // Upload file ảnh nếu có
             if (courseData.image instanceof File) {
                 formData.append('image', courseData.image);

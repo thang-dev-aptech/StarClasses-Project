@@ -16,7 +16,8 @@ $router->get('/', function() {
             'courses' => '/api/courses',
             'teachers' => '/api/teachers',
             'contact' => '/api/contact',
-            'dashboard' => '/api/admin/dashboard'
+            'dashboard' => '/api/admin/dashboard',
+            'introduction' => '/api/introduction',
         ]
     ]);
 });

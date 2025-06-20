@@ -145,10 +145,10 @@ function CoursePopup({ show, onHide, course }) {
                     return items.map((rawText, idx) => {
                       const text = typeof rawText === 'string' ? rawText.replace(' | ', ' : ') : rawText;
                       return (
-                        <div className="mb-1 d-flex align-items-center" key={idx}>
-                          <Calendar size={18} className="me-2 text-primary" />
+                    <div className="mb-1 d-flex align-items-center" key={idx}>
+                      <Calendar size={18} className="me-2 text-primary" />
                           <span>{text}</span>
-                        </div>
+                    </div>
                       );
                     });
                   })()}
